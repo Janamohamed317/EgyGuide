@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=El+Messiri:wght@400..700&display=swap");
+
+.navbar {
+  background-color: transparent !important;
+  padding: 15px 0;
+  transition: background-color 0.3s ease;
+}
+
+.navbar.scrolled {
+  background-color: rgba(19, 19, 19, 0.9) !important;
+}
+
+.navbar-brand {
+  font-size: 1.9rem;
+  font-weight: bold;
+}
+
+.nav-link {
+  font-family: "El Messiri", serif;
+  font-size: 1.5rem !important;
+  margin-left: 20px;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #634323 !important;
+}

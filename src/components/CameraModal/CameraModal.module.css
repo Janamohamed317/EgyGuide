@@ -1,0 +1,72 @@
+.main_container {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.775);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 1000;
+}
+
+.input_container {
+    border-radius: 2vw;
+    padding: 1vw;
+    width: 50vw;
+    height: 44vw;
+    background-color: #261b03f8;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 2vw;
+}
+
+.input_container_header {
+    font-size: 2vw;
+    align-self: center;
+}
+
+.img_input {
+    align-self: center;
+}
+
+.img_input:hover {
+    cursor: pointer;
+}
+
+.preview_image {
+    align-self: center;
+    width: 45vw;
+    height: 15vw;
+}
+
+.close_btn {
+    background-color: rgba(240, 248, 255, 0);
+    border: 0;
+    color: white;
+    font-size: 1vw;
+    align-self: flex-end;
+}
+
+.close_btn:hover {
+    color: red;
+    scale: 0.9;
+    transition: all ease-in-out 0.2s;
+}
+
+.browse_btn, .capture_btn {
+    padding: 1rem;
+    background-color: rgb(144, 124, 66);
+    border-radius: 0.3rem;
+    border: 0;
+    cursor: pointer;
+}
+
+.browse_btn:hover,
+.capture_btn:hover {
+  background-color: rgb(105, 87, 33);
+}
+
+.hidden_input {
+    display: none;
+}

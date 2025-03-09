@@ -1,0 +1,139 @@
+.main_container {
+    font-size: 1.6rem;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    width: 100%;
+}
+
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.table thead {
+    background-color: #333333;
+}
+
+.table th,
+.table td {
+    padding: 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid #444444;
+ 
+}
+
+.table tbody tr:hover {
+    background-color: #2a2a2a;
+}
+.del_btn
+{
+    background-color: red;
+    color: white;
+    
+    border-radius: 1.1rem;
+    padding: 0.5rem;
+}
+.edit_btn
+{
+    background-color: rgb(0, 221, 255);
+    /* color: white; */
+    border-radius: 1.1rem;
+    padding: 0.5rem;
+}
+
+.edit_form_container, .delete_container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.edit_form {
+    border-radius: 1rem;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    width: 90%;
+    max-width: 500px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.edit_form h3 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.edit_form label {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.edit_form input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #444444;
+    border-radius: 0.5rem;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    font-size: 1.4rem;
+}
+
+
+.edit_form button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit_form button[type="submit"] {
+    background-color: #d9534f;
+    color: #ffffff;
+}
+
+.edit_form button[type="submit"]:hover {
+    background-color: #c9302c;
+}
+
+.edit_form button[type="button"] {
+    background-color: #6c757d;
+    color: #ffffff;
+}
+
+.edit_form button[type="button"]:hover {
+    background-color: #5a6268;
+}
+
+.delete_container 
+{
+    position: absolute;
+}
+.delete_msg
+{
+    font-size: 2rem;
+    padding: 5rem;
+    background-color: #333333;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border-radius: 2rem;
+}

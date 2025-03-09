@@ -1,0 +1,181 @@
+.homePage {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.jumbotron {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.blurBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../../assets/i5.jpg");
+    background-size: cover;
+    background-position: center;
+    filter: blur(1.5px);
+    z-index: 1;
+}
+
+.blurBackground::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to bottom,
+            transparent,
+            #312201
+        );
+    z-index: 2;
+}
+
+.jumbotron::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right,
+            rgba(19, 19, 19, 0.8),
+            rgba(173, 159, 159, 0));
+
+    z-index: 2;
+}
+
+.textContainer {
+    position: absolute;
+    left: 5%;
+    z-index: 3;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.display4 {
+    font-size: 4rem;
+    margin: 0;
+}
+
+.lead {
+    font-size: 1.6rem;
+    margin: 0.5rem 0 0;
+}
+
+.homeButton {
+    background: transparent;
+    color: white;
+    padding: 8px 16px;
+    border: 2px solid #b49473;
+    font-size: 1.5rem;
+    width: fit-content;
+    margin-top: 40px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.homeButton:hover {
+    background: #b49473;
+}
+
+.landmarksSection {
+    padding: 10rem 10rem 12rem;
+    text-align: center;
+}
+
+.landmarksSection h2 {
+    font-size: 3rem;
+    margin-bottom: 40px;
+    color: #ffffff;
+}
+
+.landmarksGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.landmarkItem {
+    background-color: #d2ac71;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+}
+
+.landmarkItem:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.445);
+    cursor: pointer;
+}
+
+.landmarkItem img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.landmarkItem p {
+    font-size: 1.5rem;
+    padding: 15px;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.landmarkItem:nth-child(odd) {
+    transform: rotate(2deg);
+}
+
+.landmarkItem:nth-child(even) {
+    transform: rotate(-2deg);
+}
+
+.landmarkItem:hover {
+    transform: rotate(0) translateY(-10px);
+}
+
+.aboutUsSection {
+    padding: 10rem 10rem 12rem;
+    text-align: center;
+}
+
+.aboutUsSection h2 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.aboutUsSection p {
+    font-size: 2.5rem;
+    color: #a19d9d;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.line {
+    margin: 0;
+    background-color: #fff;
+    height: 0.2rem;
+    box-shadow: 0 4px 6px rgb(255, 255, 255);
+}
+

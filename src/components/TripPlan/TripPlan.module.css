@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+.main_container {
+  color: rgb(250, 213, 133);
+  height: auto;
+  margin: 0;
+  padding: 0;
+  /* width: 100%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.city_image_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+}
+
+.city_image_container::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to right,
+      rgba(0, 0, 0, 0.8),
+      rgba(136, 136, 136, 0));
+}
+
+.city_image {
+  width: 100%;
+  height: auto;
+}
+
+.trip_name {
+  color: rgb(189, 189, 189);
+  position: absolute;
+  height: 10rem;
+  font-size: 4rem;
+  margin-left: 3vw;
+
+}
+
+.about_container {
+  width: 90%;
+  padding: 2rem;
+  font-size: 2rem;
+  margin-bottom: 3rem;
+}
+
+.about_txt {
+  font-size: 4rem;
+  font-weight: 600;
+}
+
+.line {
+  margin: 0;
+  background-color: #fff;
+  margin-bottom: 3rem;
+  height: 0.2rem;
+  width: 100%;
+  box-shadow: 0 4px 6px rgb(255, 255, 255);
+}
+
+.trip_details_container {
+  margin-bottom: 3rem;
+  width: 90%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.trip_details {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.day_container {
+  width: 100%;
+  font-size: 3rem;
+  margin-bottom: 3rem;
+}
+
+.plan_txt {
+  font-size: 3.5rem;
+  font-weight: 500;
+}
+.top_picks
+{
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  width: 100%;
+}
