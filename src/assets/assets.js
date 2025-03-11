@@ -7,6 +7,11 @@ import cairo from './cairo.jpg'
 import marsa_alam from './marsa-alam.jpg'
 import hero_img from './i5.jpg'
 
+import PeopleIcon from '@mui/icons-material/People';
+import PublicIcon from '@mui/icons-material/Public';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+
+
 export const imgs = {
     luxor,
     aswan,
@@ -242,6 +247,18 @@ export const users_list = [
     { name: "uuuuuu", id: 4, trips: [], email: 'aaaaaaaa' },
 
     { name: "yyyy", id: 5, trips: [], email: 'aaaaaaaa' },
+
+
+];
+
+export const Admin_Dashboard_items = [
+    { text: "Users", id: 1, icon: <PeopleIcon/>},
+    
+    { text: "Places", id: 2, icon: <PublicIcon/>},
+    
+    { text: "Blogs", id: 3, icon: <AssignmentIcon/>},
+
+
 
 
 ];

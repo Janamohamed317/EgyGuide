@@ -121,8 +121,8 @@ function Signup() {
             <div className={styles1.form_container}>
                 <img src={signupimg} alt="Description" className={styles1.form_img} />
                 <div className={styles1.form}>
-                    <p className={styles1.Sigunp_text}>Sign Up</p>
                     <form className={styles1.form_inputs} onSubmit={handleSubmit}>
+                        <p className={styles1.Sigunp_text}>Sign Up</p>
                         <label className={`${styles1.Input_label}`}>Username</label>
                         <input className={styles1.input}
                             type='text'
@@ -170,7 +170,7 @@ function Signup() {
                         </button>
                     </form>
                     <p className={styles1.Sigunp_text2}>
-                        Already have an account?<span className={styles1.Signup_text} onClick={() => navigate("/signin")}> Sign in</span>
+                        Already have an account?<span className={styles1.Signin_text} onClick={() => navigate("/signin")}> Sign in</span>
                     </p>
                 </div>
             </div>

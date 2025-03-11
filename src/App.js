@@ -26,8 +26,6 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/Trip-plan" element={<TripPlan />} />
         <Route path="/Admin" element={<Admin />} />
-        <Route path="/Admin/Users" element={<Users />} />
-        <Route path="/Admin/Govs" element={<Cities />} />
         <Route path="/Currency-Converter" element={<CurrencyConverter />} />
       </Routes>
       

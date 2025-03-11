@@ -4,10 +4,8 @@ html {
   font-size: 62.5%;
 }
 
-
 .main_container {
   font-family: 'Montserrat';
-  position: relative;
   text-align: center;
   width: 100%;
   min-height: 100vh;
@@ -15,7 +13,6 @@ html {
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  background-color: #312201;
 }
 
 .form_container {
@@ -23,31 +20,33 @@ html {
   background-color: #c2b280;
   border: none;
   border-radius: 1.5rem;
-  width: 100%;
-  max-width: 80rem;
+  width: auto;
+  max-width: 60vw;
   height: auto;
   display: flex;
+  gap: 2vw;
   justify-content: space-between;
 }
 
 .form_img {
   width: 100%;
-  max-width: 40rem;
+  max-width: 30vw;
   object-fit: cover;
-  border-radius: 1.5rem;
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem;
 }
 
 .Login_text {
   font-size: 5rem;
-  margin-top: 2rem;
-  margin-right: 20rem;
+  margin-top: 2vw;
+  /* margin-right: 12vw; */
 }
 
 .form_inputs {
-  width: 80%;
+  width: 90%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .Input_label {
@@ -62,7 +61,7 @@ html {
   border-radius: 1rem;
   background-color: #e9e9ca;
   border: none;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5vw;
   font-size: 1.5rem;
 }
 
@@ -74,17 +73,16 @@ html {
 }
 
 .form_checkbox_container {
-  margin-left: 15rem;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  margin-top: 1rem;
+  width: 100%;
   gap: 0.5rem;
 }
 
 .form_checkbox {
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.4rem;
+  height: 1.4rem;
   border-radius: 0.5rem;
   background-color: #fff;
   cursor: pointer;
@@ -94,8 +92,8 @@ html {
 .form_checkbox::before {
   content: "";
   display: block;
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.4rem;
+  height: 1.4rem;
   border-radius: 0.25rem;
   transition: all 0.2s;
   background-color: #fff;
@@ -108,12 +106,13 @@ html {
 
 .checkbox_label {
   font-size: 1.2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5vw;
 }
 
 .form_btn {
   width: 100%;
   padding: 1rem;
+  border: 0;
   border-radius: 1.5rem;
   color: white;
   background-color: rgb(52, 34, 0);
@@ -155,8 +154,8 @@ html {
 
 .Login_text2 {
   font-size: 1.6rem;
-  margin-top: 2rem;
-  margin-right: 5.8rem;
+  margin-top: 2vw;
+  margin-right: 0.5vw;
 }
 
 .Signup_text {
@@ -164,104 +163,20 @@ html {
   cursor: pointer;
 }
 
-@media (max-width: 820px) {
+
+@media (max-width: 1010px) {
   .form_container {
-    flex-direction: column;
+    flex-direction: column; 
+    max-width: 90vw; 
+    gap: 2rem; 
+    justify-content: center;
     align-items: center;
-    padding: 0;
   }
 
   .form_img {
-    width: 100%;
-    max-width: 100rem;
-    margin-bottom: 2rem;
+    max-width: 100%;
+    border-radius: 1.5rem 1.5rem 0 0; 
   }
 
-  .form_inputs {
-    width: 100%;
-  }
-
-  .Input_label {
-    align-self: flex-start;
-    font-size: 5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .Login_text {
-    font-size: 8rem;
-  }
-
-  .form_checkbox_container {
-    margin: 2rem 0;
-    align-self: flex-end;
-  }
-
-  .form_btn {
-    width: 80%;
-    padding: 2rem;
-    margin: 0;
-  }
-
-  .form_btn span {
-    font-size: 3rem;
-    margin-bottom: 2rem;
-  }
-
-  .Login_text2 {
-    font-size: 2rem;
-    align-self: center;
-    margin: 2rem 0rem;
-  }
-}
-
-@media (max-width: 540px) {
-  html {
-    font-size: 60%;
-  }
-
-  .form_img {
-    width: 100%;
-    max-width: 90rem;
-    margin-bottom: 2rem;
-  }
-
-  .form_inputs {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-  }
-
-  .Input_label {
-    align-self: flex-start;
-    font-size: 2.5rem;
-    margin-top: 0.6rem;
-  }
-
-  .Login_text {
-    font-size: 4rem;
-  }
-
-  .form_btn {
-    padding: 1rem;
-    width: 20rem;
-    margin: 0;
-  }
-
-  .form_btn span {
-    margin-bottom: 5rem;
-    font-size: 2rem;
-  }
-
-  .Login_text2 {
-    align-self: center;
-    margin: 0;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  html {
-    font-size: 50%;
-  }
+ 
 }

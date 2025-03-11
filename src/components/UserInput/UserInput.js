@@ -71,77 +71,75 @@ function UserInput() {
     <>
       {cameraClicked && <CameraModal />}
 
+      <Navbar />
       <div className={styles2.main_container}>
-
-        <Navbar />
         <div className={styles2.user_input_container}>
-          <div className={styles2.inputs_container}>
-            <p className={styles2.user_input_text}>Enter Your Trip Details</p>
-            <div className={`${styles2.user_inputs} d-flex justify-content-around`}>
-              <div className={`form-group ${styles2.form_group}`}>
-                <label htmlFor="days">Number Of Days:</label>
-                <br />
-                <input
-                  type="number"
-                  id="days"
-                  className={` ${styles2.inputs}`}
-                  onChange={(e) => setDays(Number(e.target.value))}
-                />
-              </div>
-              <div className={`form-group ${styles2.form_group}`}>
-                <label htmlFor="destination">Destination:</label>
-                <br />
-                <select
-                  id="destination"
-                  className={`${styles2.inputs}`}
-                  onChange={(e) => setCity(e.target.value)}
-                >
-                  <option disabled selected>Choose...</option>
-                  {governorates.map((gov) => (
-                    <option key={gov} value={gov}>
-                      {gov}
-                    </option>
-                  ))}
-                </select>
-              </div>
+          <p className={styles2.user_input_text}>Enter Your Trip Details</p>
+          <div className={`${styles2.user_inputs} d-flex justify-content-around`}>
+            <div className={`form-group ${styles2.form_group}`}>
+              <label htmlFor="days" className={styles2.input_labels}>Number Of Days:</label>
+              <br />
+              <input
+                type="number"
+                id="days"
+                className={` ${styles2.inputs}`}
+                onChange={(e) => setDays(Number(e.target.value))}
+              />
             </div>
-
-            <div className={`${styles2.user_inputs} d-flex justify-content-around`}>
-              <div className={`form-group ${styles2.form_group}`}>
-                <label htmlFor="budget">Budget in EGP:</label>
-                <br />
-                <input
-                  type="text"
-                  id="budget"
-                  className={` ${styles2.inputs}`}
-                  onChange={(e) => setBudget(e.target.value)}
-                />
-              </div>
-              <div className={`form-group ${styles2.form_group}`}>
-                <label htmlFor="interests">Interests:</label>
-                <br />
-                <select
-                  id="interests"
-                  className={` ${styles2.inputs}`}
-                  onChange={(e) => setInterests(e.target.value)}
-                >
-                  <option disabled selected>Choose...</option>
-                  {governorates.map((gov) => (
-                    <option key={gov} value={gov}>
-                      {gov}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className={`form-group ${styles2.form_group}`}>
+              <label htmlFor="destination" className={styles2.input_labels}>Destination:</label>
+              <br />
+              <select
+                id="destination"
+                className={`${styles2.inputs}`}
+                onChange={(e) => setCity(e.target.value)}
+              >
+                <option disabled selected >Choose...</option>
+                {governorates.map((gov) => (
+                  <option key={gov} value={gov} className={styles2.options}>
+                    {gov}
+                  </option>
+                ))}
+              </select>
             </div>
-            <button className={styles2.input_btn} onClick={handleTripSelection}>
-              Next
-            </button>
           </div>
+
+          <div className={`${styles2.user_inputs} d-flex justify-content-around`}>
+            <div className={`form-group ${styles2.form_group}`}>
+              <label htmlFor="budget" className={styles2.input_labels}>Budget in EGP:</label>
+              <br />
+              <input
+                type="text"
+                id="budget"
+                className={` ${styles2.inputs}`}
+                onChange={(e) => setBudget(e.target.value)}
+              />
+            </div>
+            <div className={`form-group ${styles2.form_group}`}>
+              <label htmlFor="interests" className={styles2.input_labels}>Interests:</label>
+              <br />
+              <select
+                id="interests"
+                className={` ${styles2.inputs}`}
+                onChange={(e) => setInterests(e.target.value)}
+              >
+                <option disabled selected>Choose...</option>
+                {governorates.map((gov) => (
+                  <option key={gov} value={gov} className={styles2.options}>
+                    {gov}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <button className={styles2.input_btn} onClick={handleTripSelection}>
+            Next
+          </button>
         </div>
         <FontAwesomeIcon icon={faCamera} className='camera_icon' onClick={() => setCameraClicked(true)} />
-        <Footer />
       </div>
+      <Footer />
+
     </>
   );
 }

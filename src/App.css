@@ -11,12 +11,11 @@
   margin: 2rem;
   color: #ffffff;
   cursor: pointer;
-  background-color: rgb(106, 69, 0);  
+  background-color: rgb(106, 69, 0);
   padding: 2rem;
   border-radius: 3rem;
 }
 
-.camera_icon:hover
-{
-background-color: rgb(201, 165, 112);
+.camera_icon:hover {
+  background-color: rgb(201, 165, 112);
 }

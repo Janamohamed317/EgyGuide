@@ -11,7 +11,7 @@ function Signin() {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const { showPassword, handleCheckboxChange,setLoggedOut } = useContext(AppContext);
+  const { showPassword, handleCheckboxChange, setLoggedOut } = useContext(AppContext);
   const navigate = useNavigate();
 
   const ValidateSignIn = (field, value) => {
@@ -91,8 +91,8 @@ function Signin() {
       <div className={styles.form_container}>
         <img src={login_img} alt="Description" className={styles.form_img} />
         <div className={styles.form}>
-          <p className={styles.Login_text}>Sign in</p>
           <form className={styles.form_inputs} onSubmit={handleSubmit}>
+            <p className={styles.Login_text}>Sign in</p>
             <label className={`${styles.Input_label}`}>Email</label>
             <br />
             <input
@@ -141,7 +141,6 @@ function Signin() {
               className={styles.Signup_text}
               onClick={() => navigate("/signup")}
             >
-              {" "}
               Sign Up
             </span>
           </p>
