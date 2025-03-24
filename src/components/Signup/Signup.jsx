@@ -73,12 +73,13 @@ function Signup() {
             });
             return;
         }
-
+        // http://travelguide.runasp.net/api/UsersIdentity/Register
         try {
-            const res = await axios.post('https://your-api-endpoint.com/signup', {
+            const res = await axios.post('http://localhost:3004/users', {
                 email,
-                userName,
+                dispalyName: userName,
                 password,
+              
             });
 
             if (res.status === 200 || res.status === 201) {
@@ -90,6 +91,8 @@ function Signup() {
                 }).then(() => {
                     setShowPassword(false);
                     navigate("/Signin");
+                    console.log(res.data);
+                    
                 });
             } else if (res.status === 409) {
                 Swal.fire({

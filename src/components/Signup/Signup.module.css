@@ -1,10 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
-
 .main_container {
   margin: 0;
   padding: 0;
-  font-family: 'Montserrat';
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -14,8 +10,10 @@
 }
 
 .form_container {
-  color: rgb(84, 50, 18);
-  background-color: #c2b280;
+  color: #c2b280;
+  font-family: 'headers_font';
+  /* background-color: #c2b280; */
+  background-color: #312201;
   border: none;
   border-radius: 1.5rem;
   width: auto;
@@ -40,6 +38,8 @@
 }
 
 .form_inputs {
+  font-family: 'text_font';
+  font-size: 1.2rem;
   width: 90%;
   display: flex;
   flex-direction: column;
@@ -72,7 +72,8 @@
 .form_checkbox_container {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  /* align-items: center; */
+  margin-top: 2rem;
   width: 100%;
   gap: 0.5rem;
 }
@@ -81,7 +82,7 @@
   width: 1.4rem;
   height: 1.4rem;
   border-radius: 0.5rem;
-  background-color: #fff;
+  background-color: #c2b280;
   cursor: pointer;
   display: flex;
 }
@@ -98,7 +99,7 @@
 
 .form_checkbox:checked::before {
   transition: all 0.2s;
-  background-color: rgb(84, 50, 18);
+  background-color: #fff;
 }
 
 .checkbox_label {
@@ -112,7 +113,7 @@
   border: 0;
   border-radius: 1.5rem;
   color: white;
-  background-color: rgb(52, 34, 0);
+  background-color: #c2b280;
   font-size: 2rem;
   cursor: pointer;
   margin-top: 2rem;
@@ -155,7 +156,7 @@
   margin-top: 0.5vw;
 }
 
-.Signin_text{
+.Signin_text {
   text-decoration: underline;
   cursor: pointer;
 }

@@ -11,7 +11,7 @@ function Signin() {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const { showPassword, handleCheckboxChange, setLoggedOut } = useContext(AppContext);
+  const { showPassword, handleCheckboxChange, setLoggedOut,setUserName } = useContext(AppContext);
   const navigate = useNavigate();
 
   const ValidateSignIn = (field, value) => {
@@ -42,48 +42,48 @@ function Signin() {
     ValidateSignIn("password", password);
     setLoggedOut(false)
     navigate('/home')
-    // if (!emailError && !passwordError) {
-    //   try {
-    //     const response = await axios.post("", {
-    //       email,
-    //       password,
-    //     });
+    if (!emailError && !passwordError) {
+      try {
+        const response = await axios.post("http://localhost:3004/users", {
+          email,
+          password,
+        });
 
-    //     if (response.status === 200) {
-    //       Swal.fire({
-    //         icon: "success",
-    //         title: "Login Successful!",
-    //         text: "You have successfully signed in.",
-    //         confirmButtonText: "OK",
-    //       }).then(() => {
-    //         navigate("/home");
-    //       });
-    //     } else {
-    //       Swal.fire({
-    //         icon: "error",
-    //         title: "Login Failed",
-    //         text: response.data.message || "Invalid email or password.",
-    //         confirmButtonText: "OK",
-    //       });
-    //     }
-    //   } catch (error) {
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "Error",
-    //       text:
-    //         error.response?.data?.message ||
-    //         "There was an error signing in. Please try again.",
-    //       confirmButtonText: "OK",
-    //     });
-    //   }
-    // } else {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Validation Error",
-    //     text: "Please fix the errors in the form before submitting.",
-    //     confirmButtonText: "OK",
-    //   });
-    // }
+        if (response.status === 200) {
+          Swal.fire({
+            icon: "success",
+            title: "Login Successful!",
+            text: "You have successfully signed in.",
+            confirmButtonText: "OK",
+          }).then(() => {
+            navigate("/home");
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Login Failed",
+            text: response.data.message || "Invalid email or password.",
+            confirmButtonText: "OK",
+          });
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text:
+            error.response?.data?.message ||
+            "There was an error signing in. Please try again.",
+          confirmButtonText: "OK",
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Validation Error",
+        text: "Please fix the errors in the form before submitting.",
+        confirmButtonText: "OK",
+      });
+    }
   };
 
   return (

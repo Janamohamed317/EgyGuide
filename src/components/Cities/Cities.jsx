@@ -1,23 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from './Cities.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { cities } from "../../assets/assets";
+// import { cities } from "../../assets/assets";
+import { AppContext } from '../Context/AppContext';
 
 function Cities() {
-  const [citie, setCities] = useState([]);
+  const { cities, setCities } = useContext(AppContext)
   const [deletingCity, setDeletingCity] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    axios.get('http://localhost:3002/cities/')
-      .then(res => {
-        setCities(res.data);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+
 
   const handleDelete = (id) => {
     axios.delete(`http://localhost:3002/cities/${id}`)
@@ -35,7 +28,7 @@ function Cities() {
   };
 
   return (
-    <div className= {styles.main_container}>
+    <div className={styles.main_container}>
       <div className="row">
         {deletingCity && (
           <div className={styles.delete_container}>
@@ -48,23 +41,24 @@ function Cities() {
         )}
       </div>
 
-      <div className="row ">
-        {cities.map((city) => (
-          <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={city.id}>
-            <div className={`card ${styles.card}`}>
-              <img className={`card-img-top ${styles.card_img}`} src={city.image} alt={city.name} />
-              <div className="card-body">
-                <h5 className="card-title">{city.name}</h5>
-                <p className="card-text">about el city</p>
-                <div className={styles.buttons_container}>
-                  <button className={styles.del_btn} onClick={() => setDeletingCity(city.id)}>Delete</button>
-                  <button className={styles.edit_btn} onClick={() => handleEdit(city.id)}>Edit</button>
-                </div>
+
+      {cities.map((city) => (
+        <div className="" key={city.id}>
+          <div className={`card ${styles.card}`}>
+            <img className={`card-img-top ${styles.card_img}`} src={city.imageUrl} alt={city.name} />
+            <div className="card-body">
+              <h5 className="card-title">{city.name}</h5>
+              <p className="card-text">{city.description}</p>
+              <div className={styles.buttons_container}>
+                <button className={styles.del_btn} onClick={() => setDeletingCity(city.id)}>Delete</button>
+                <button className={styles.edit_btn} onClick={() => handleEdit(city.id)}>Edit</button>
               </div>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
+
+
     </div>
   );
 }

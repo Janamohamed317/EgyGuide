@@ -11,12 +11,14 @@
 }
 
 .navbar-brand {
-  font-size: 1.9rem;
+  font-family: 'headers_font' !important;
+  font-size: 1.7rem !important;
   font-weight: bold;
 }
 
 .nav-link {
-  font-family: "El Messiri", serif;
+  font-family: 'headers_font' !important;
+  /* font-family: 'text_font' !important; */
   font-size: 1.5rem !important;
   margin-left: 20px;
   transition: color 0.3s ease;

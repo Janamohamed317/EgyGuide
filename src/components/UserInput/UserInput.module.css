@@ -11,22 +11,25 @@
 }
 
 .user_input_container {
+  font-family: 'text_font';
   margin: 0;
   border-radius: 1.7rem;
   padding: 2rem;
   font-size: 2rem;
   margin-top: 5vw;
   color: rgb(254, 254, 254);
-  background-color: rgba(0, 0, 0, 0.212);
+  background-color: #312201;
   width: 80vw;
   display: flex;
   flex-direction: column;
 }
 
 .user_input_text {
+  font-family: 'headers_font';
   margin-bottom: 3vw;
   font-size: 3rem;
 }
+
 .form-control {
   width: 100%;
   border: none;
@@ -43,8 +46,7 @@
   color: black;
 }
 
-.input_labels
-{
+.input_labels {
   margin-bottom: 1vw;
   margin-top: 1vw;
 }
@@ -57,7 +59,7 @@
 .input_btn {
   width: 15rem;
   border: none;
-  background-color: rgb(52, 34, 0);
+  background-color: #c2b280;
   color: rgb(255, 255, 255);
   border-radius: 4rem;
   padding: 0.5rem;
@@ -78,7 +80,6 @@
 
   .user_inputs {
     flex-direction: column;
-  
+
   }
 }
-

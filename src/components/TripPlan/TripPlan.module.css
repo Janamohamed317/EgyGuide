@@ -2,7 +2,6 @@
 
 
 .main_container {
-  color: rgb(250, 213, 133);
   height: auto;
   margin: 0;
   padding: 0;
@@ -42,6 +41,7 @@
 }
 
 .trip_name {
+  font-family: 'text_font';
   color: rgb(189, 189, 189);
   position: absolute;
   height: 10rem;
@@ -55,9 +55,11 @@
   padding: 2rem;
   font-size: 2rem;
   margin-bottom: 3rem;
+  font-family: 'text_font';
 }
 
 .about_txt {
+  font-family: 'headers_font';
   font-size: 4rem;
   font-weight: 600;
 }
@@ -71,7 +73,8 @@
   box-shadow: 0 4px 6px rgb(255, 255, 255);
 }
 
-.trip_details_container {
+.trip_details_container {  
+  font-family: 'headers_font';
   margin-bottom: 3rem;
   width: 90%;
   padding: 2rem;
@@ -86,13 +89,16 @@
 }
 
 .day_container {
+
   width: 100%;
+  font-family: 'text_font';
   font-size: 3rem;
   margin-bottom: 3rem;
 }
 
 .plan_txt {
   font-size: 3.5rem;
+  font-family: 'text_font';
   font-weight: 500;
 }
 .top_picks

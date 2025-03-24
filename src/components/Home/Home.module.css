@@ -35,8 +35,7 @@
     height: 40%;
     background: linear-gradient(to bottom,
             transparent,
-            #312201
-        );
+            #312201);
     z-index: 2;
 }
 
@@ -64,11 +63,14 @@
 
 .display4 {
     font-size: 4rem;
+    font-family: 'headers_font' !important;
+
     margin: 0;
 }
 
 .lead {
     font-size: 1.6rem;
+    font-family: 'headers_font' !important;
     margin: 0.5rem 0 0;
 }
 
@@ -81,6 +83,7 @@
     width: fit-content;
     margin-top: 40px;
     cursor: pointer;
+    font-family: 'text_font';
     transition: background 0.3s ease, color 0.3s ease;
 }
 
@@ -94,6 +97,7 @@
 }
 
 .landmarksSection h2 {
+    font-family: 'headers_font';
     font-size: 3rem;
     margin-bottom: 40px;
     color: #ffffff;
@@ -108,6 +112,8 @@
 }
 
 .landmarkItem {
+    font-family: 'text_font';
+
     background-color: #d2ac71;
     border-radius: 10px;
     overflow: hidden;
@@ -159,14 +165,18 @@
 }
 
 .aboutUsSection h2 {
-    font-size: 4rem;
+    font-family: 'headers_font';
+    font-size: 5rem;
     margin-bottom: 20px;
-    color: #ffffff;
+    /* color: #ffffff; */
+    color: #2c2000;
+
 }
 
 .aboutUsSection p {
+    font-family: 'text_font';
     font-size: 2.5rem;
-    color: #a19d9d;
+    color: #2c2000;
     max-width: 800px;
     margin: 0 auto;
     line-height: 1.6;
@@ -178,4 +188,3 @@
     height: 0.2rem;
     box-shadow: 0 4px 6px rgb(255, 255, 255);
 }
-

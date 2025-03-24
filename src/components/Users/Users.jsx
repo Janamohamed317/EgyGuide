@@ -8,7 +8,7 @@ function Users() {
     const [deletingUser, setDeletingUser] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/users')
+        axios.get('http://localhost:3004/users')
             .then(res => {
                 setUsersList(res.data);
               
@@ -21,7 +21,7 @@ function Users() {
     }, []);
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:3001/users/${id}`)
+        axios.delete(`http://localhost:3004/users/${id}`)
             .then(() => {
                 setUsersList(usersList.filter(user => user.id !== id));
                 setDeletingUser(null);
@@ -33,7 +33,7 @@ function Users() {
     };
 
     const handleUpdate = (id, updatedUser) => {
-        axios.patch(`http://localhost:3001/users/${id}`, updatedUser)
+        axios.patch(`http://localhost:3004/users/${id}`, updatedUser)
             .then(res => {
                 setUsersList(usersList.map(user =>
                     user.id === id ? { ...user, ...updatedUser } : user
@@ -111,14 +111,16 @@ function Users() {
                     <tbody>
                         {usersList.map((user) => (
                             <tr key={user.id}>
-                                <td>{user.id}</td>
-                                <td>{user.name}</td>
+                                {/* <td>{user.id}</td> */}
+                                <td>{user.dispalyName}</td>
                                 <td>{user.email}</td>
-                                <td>
+                                <td>{user.password}</td>
+
+                                {/* <td>
                                     {user.trips.map((trip, index) => (
                                         <span key={index} className="badge bg-secondary me-1">{trip}</span>
                                     ))}
-                                </td>
+                                </td> */}
                                 <td>
                                     <button className={styles.del_btn} onClick={() => setDeletingUser(user.id)}>Delete</button>
                                     <button className={styles.edit_btn} onClick={() => setEditingUser(user)}>Edit</button>

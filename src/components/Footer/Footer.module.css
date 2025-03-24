@@ -1,8 +1,13 @@
 .main_container {
     background-color: rgb(38, 22, 0);
-    padding: 10rem;
+    padding: 8rem;
     height: auto;
     width: 100%;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-wrap: wrap;
 }
 
 .br_line {

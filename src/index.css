@@ -1,8 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap'); 
 body {
   margin: 0;
   /* background-color: #1b1400  !important; */
-  background-color: #312201 !important;
+  /* background-color: #312201 !important; */
+  background-color: #c2b280 !important;
   color: rgb(255, 255, 255) !important;
+}
+@font-face {
+  font-family: 'headers_font';
+  src: url('https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400..700&display=swap');
+}
+
+@font-face {
+  font-family: 'text_font';
+  src: url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
 }
 
 

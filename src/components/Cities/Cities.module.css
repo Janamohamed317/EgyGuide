@@ -5,8 +5,9 @@
     margin-top: 4rem;
     padding: 2rem;
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
     align-items: center;
 }
 

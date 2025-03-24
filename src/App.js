@@ -5,18 +5,18 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import UserInput from "./components/UserInput/UserInput";
 import TripPlan from "./components/TripPlan/TripPlan";
 import Admin from "./components/AdminPanel/Admin";
-import Users from "./components/Users/Users";
 import Home from "./components/Home/Home";
-import Cities from "./components/Cities/Cities";
 import EditCity from "./components/EditCity/EditCity";
 import CurrencyConverter from "./components/CurrencyConverter/CurrencyConverter";
+import ExploreEgypt from "./components/ExploreEgypt/ExploreEgypt";
+import Blogs from "./components/Blogs/Blogs";
+import Profile from "./components/Profile/Profile";
 
 function App() {
 
 
   return (
     <div className="App">
-      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/edit" element={<EditCity />} />
@@ -27,8 +27,11 @@ function App() {
         <Route path="/Trip-plan" element={<TripPlan />} />
         <Route path="/Admin" element={<Admin />} />
         <Route path="/Currency-Converter" element={<CurrencyConverter />} />
+        <Route path="/Explore-Egypt" element={<ExploreEgypt />} />
+        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/profile" element = {<Profile />} />
       </Routes>
-      
+
     </div>
   );
 }

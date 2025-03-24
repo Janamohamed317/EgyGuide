@@ -12,8 +12,9 @@
 .input_container {
     border-radius: 2vw;
     padding: 1vw;
-    width: 50vw;
-    height: 44vw;
+    width: 60rem;
+    min-height: 60rem;
+    height: auto;
     background-color: #261b03f8;
     display: flex;
     flex-direction: column;
@@ -22,7 +23,7 @@
 }
 
 .input_container_header {
-    font-size: 2vw;
+    font-size: 1.5rem;
     align-self: center;
 }
 
@@ -36,15 +37,17 @@
 
 .preview_image {
     align-self: center;
-    width: 45vw;
-    height: 15vw;
+    bottom: 0;
+    max-width: 50rem;
+    height: 20rem;
 }
 
 .close_btn {
     background-color: rgba(240, 248, 255, 0);
     border: 0;
+    width: auto;
     color: white;
-    font-size: 1vw;
+    font-size: 1.5rem;
     align-self: flex-end;
 }
 
@@ -55,7 +58,7 @@
 }
 
 .browse_btn, .capture_btn {
-    padding: 1rem;
+    padding: 0.5rem;
     background-color: rgb(144, 124, 66);
     border-radius: 0.3rem;
     border: 0;
