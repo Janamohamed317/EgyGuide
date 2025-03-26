@@ -8,7 +8,7 @@ function Blog({ blog }) {
         : blog;
 
     return (
-        <div className="card rounded-4" style={{ width: '35rem', height: '40rem' }}>
+        <div className="card rounded-4" style={{ width: '35rem', height: '40rem', backgroundColor:'rgb(106, 69, 0)' , color:'white' }}>
             <div className="card-body ">
                 <h5 className="card-title fs-3">Username</h5>
                 <hr/>

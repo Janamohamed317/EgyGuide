@@ -100,7 +100,7 @@
     font-family: 'headers_font';
     font-size: 3rem;
     margin-bottom: 40px;
-    color: #ffffff;
+    color: #2e1b00;
 }
 
 .landmarksGrid {
@@ -113,8 +113,7 @@
 
 .landmarkItem {
     font-family: 'text_font';
-
-    background-color: #d2ac71;
+    background-color: rgb(106, 69, 0);
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

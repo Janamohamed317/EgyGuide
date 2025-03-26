@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Navbar from "../Navbar/Navbar";
 import Blog from '../Blog/Blog';
 import Footer from '../Footer/Footer';
-
+import axios from 'axios';
 import { AppContext } from '../Context/AppContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +10,7 @@ function Blogs() {
     const [blogContent, setBlogContent] = useState('');
     const { blogs, setBlogs } = useContext(AppContext);
     const [searchedItem, setSearchedItem] = useState('');
+ 
 
     const handleBlogSubmit = () => {
         if (blogContent.trim()) {
@@ -27,8 +28,8 @@ function Blogs() {
         <>
             <Navbar />
             <div className='d-flex justify-content-start align-items-center flex-column' style={{ minHeight: '100vh', height: 'auto', marginTop: '10rem' }}>
-                <h1 style={{  fontFamily: 'headers_font', fontSize:'4rem'}}>Welcome to Blogs Page</h1>
-                <span className='lead' style={{  fontFamily: 'text_font', fontSize:'1.5rem'}}>You can search for any blog you want</span>
+                <h1 style={{ fontFamily: 'headers_font', fontSize: '4rem' }}>Welcome to Blogs Page</h1>
+                <span className='lead' style={{ fontFamily: 'text_font', fontSize: '1.5rem' }}>You can search for any blog you want</span>
                 <br />
                 <div style={{ position: 'relative' }}>
                     <input
@@ -47,7 +48,7 @@ function Blogs() {
                 </div>
 
                 <div className='d-flex justify-content-center align-items-center mb-5 w-50'>
-                    <div className="input-group "  >
+                    <div className="input-group">
                         <textarea
                             className="form-control fs-3"
                             placeholder="What's on your mind?"
@@ -68,7 +69,7 @@ function Blogs() {
                     )}
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     );
 }

@@ -7,21 +7,21 @@ function Users() {
     const [editingUser, setEditingUser] = useState(null);
     const [deletingUser, setDeletingUser] = useState(null);
 
-    useEffect(() => {
-        axios.get('http://localhost:3004/users')
-            .then(res => {
-                setUsersList(res.data);
+    // useEffect(() => {
+    //     axios.get('http://localhost:3002/users')
+    //         .then(res => {
+    //             setUsersList(res.data);
               
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching data:', error);
             
                 
-            });
-    }, []);
+    //         });
+    // }, []);
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:3004/users/${id}`)
+        axios.delete(`http://localhost:3002/users/${id}`)
             .then(() => {
                 setUsersList(usersList.filter(user => user.id !== id));
                 setDeletingUser(null);
@@ -33,7 +33,7 @@ function Users() {
     };
 
     const handleUpdate = (id, updatedUser) => {
-        axios.patch(`http://localhost:3004/users/${id}`, updatedUser)
+        axios.patch(`http://localhost:3002/users/${id}`, updatedUser)
             .then(res => {
                 setUsersList(usersList.map(user =>
                     user.id === id ? { ...user, ...updatedUser } : user
@@ -49,9 +49,9 @@ function Users() {
     const handleUpdateSubmit = (e) => {
         e.preventDefault();
         const updatedUser = {
-            name: e.target.name.value,
+            dispalyName: e.target.name.value,
             email: e.target.email.value,
-            trips: e.target.trips.value.split(','),
+            // trips: e.target.trips.value.split(','),
         };
         handleUpdate(editingUser.id, updatedUser);
     };
@@ -66,7 +66,7 @@ function Users() {
                         <label>Username</label>
                         <input
                             name="name"
-                            defaultValue={editingUser.name}
+                            defaultValue={editingUser.dispalyName}
                             placeholder="Name"
                             required
                         />
@@ -77,12 +77,12 @@ function Users() {
                             placeholder="Email"
                             required
                         />
-                        <label>Trips</label>
+                        {/* <label>Trips</label>
                         <input
                             name="trips"
                             defaultValue={editingUser.trips.join(',')}
                             placeholder="Trips (comma-separated)"
-                        />
+                        /> */}
                         <button type="submit" className="btn btn-danger">Save</button>
                         <button type="button" className="btn btn-secondary" onClick={() => setEditingUser(null)}>Cancel</button>
                     </form>
@@ -104,17 +104,16 @@ function Users() {
                             <th>ID</th>
                             <th>User Name</th>
                             <th>Email</th>
-                            <th>Trips</th>
+                            {/* <th>Trips</th> */}
                             <th>Operations</th>
                         </tr>
                     </thead>
                     <tbody>
                         {usersList.map((user) => (
                             <tr key={user.id}>
-                                {/* <td>{user.id}</td> */}
+                                <td>{user.id}</td>
                                 <td>{user.dispalyName}</td>
                                 <td>{user.email}</td>
-                                <td>{user.password}</td>
 
                                 {/* <td>
                                     {user.trips.map((trip, index) => (

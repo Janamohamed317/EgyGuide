@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import styles from './Cities.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-// import { cities } from "../../assets/assets";
+import { citiess } from "../../assets/assets";
 import { AppContext } from '../Context/AppContext';
 
 function Cities() {
@@ -13,7 +13,7 @@ function Cities() {
 
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:3002/cities/${id}`)
+    axios.delete(`http://localhost:3001/cities/${id}`)
       .then(() => {
         setCities(prevCities => prevCities.filter(city => city.id !== id));
         setDeletingCity(null);
@@ -42,7 +42,7 @@ function Cities() {
       </div>
 
 
-      {cities.map((city) => (
+      {citiess.map((city) => (
         <div className="" key={city.id}>
           <div className={`card ${styles.card}`}>
             <img className={`card-img-top ${styles.card_img}`} src={city.imageUrl} alt={city.name} />

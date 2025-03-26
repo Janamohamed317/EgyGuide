@@ -15,9 +15,8 @@ const AppContextProvider = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://travelguide.runasp.net/api/Governorates');
-                console.log(response.data);
-                // setCities(response.data);
+                const response = await axios.get('http://localhost:3001/cities');
+                setCities(response.data[0]['$values']);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }

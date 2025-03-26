@@ -12,10 +12,15 @@
 }
 
 .card {
-    color: #ffffff;
-    background-color: #2c1b01;
+    color: #ffffff !important;
+    width: 40rem;
+    min-height: 50rem;
+    height: 40rem;
+    
+    background-color: #2c1b01 !important;
     border-radius: 1rem;
     overflow: hidden;
+    border: 0;
     transition: transform 0.3s ease-in-out;
 }
 

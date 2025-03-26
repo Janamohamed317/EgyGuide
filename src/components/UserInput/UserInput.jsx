@@ -3,7 +3,6 @@ import styles2 from "./UserInput.module.css";
 import { governorates } from "../../assets/assets";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import Navbar from "../Navbar/Navbar";
@@ -12,7 +11,7 @@ import { AppContext } from '../Context/AppContext';
 import CameraModal from "../CameraModal/CameraModal";
 
 function UserInput() {
-  const { setCameraClicked, cameraClicked } = useContext(AppContext);
+  const { setCameraClicked, cameraClicked ,cities } = useContext(AppContext);
   const [budget, setBudget] = useState(0);
   const [interests, setInterests] = useState("");
   const [city, setCity] = useState("");
@@ -95,9 +94,9 @@ function UserInput() {
                 onChange={(e) => setCity(e.target.value)}
               >
                 <option disabled selected >Choose...</option>
-                {governorates.map((gov) => (
-                  <option key={gov} value={gov} className={styles2.options}>
-                    {gov}
+                {cities.map((city) => (
+                  <option key={city.id} value={city.name} className={styles2.options}>
+                    {city.name}
                   </option>
                 ))}
               </select>
@@ -119,14 +118,14 @@ function UserInput() {
               <label htmlFor="interests" className={styles2.input_labels}>Interests:</label>
               <br />
               <select
-                id="interests"
-                className={` ${styles2.inputs}`}
+                id="intersets"
+                className={`${styles2.inputs}`}
                 onChange={(e) => setInterests(e.target.value)}
               >
-                <option disabled selected>Choose...</option>
-                {governorates.map((gov) => (
-                  <option key={gov} value={gov} className={styles2.options}>
-                    {gov}
+                <option disabled selected >Choose...</option>
+                {cities.map((city) => (
+                  <option key={city.id} value={city.name} className={styles2.options}>
+                    {city.name}
                   </option>
                 ))}
               </select>

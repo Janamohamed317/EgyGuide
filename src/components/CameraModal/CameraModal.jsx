@@ -4,14 +4,54 @@ import { AppContext } from "../Context/AppContext";
 
 function CameraModal() {
   const [img, setImg] = useState(null);
+  const [prediction, setPrediction] = useState(null);
+  const [confidence, setConfidence] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const { setCameraClicked } = useContext(AppContext);
   const fileInputRef = useRef(null);
   const browseFileRef = useRef(null);
-  const handleFileChange = (e) => {
+
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
       const imgURL = URL.createObjectURL(file);
       setImg(imgURL);
+      setPrediction(null); // Reset previous prediction
+      setError(null); // Reset previous error
+
+      try {
+        setIsLoading(true);
+        await predictLandmark(file);
+      } catch (err) {
+        setError("Failed to process image. Please try again.");
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const predictLandmark = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('http://localhost:5000/predict', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setPrediction(data.prediction);
+      setConfidence(data.confidence);
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
     }
   };
 
@@ -26,7 +66,10 @@ function CameraModal() {
   return (
     <div className={modalStyle.main_container}>
       <div className={modalStyle.input_container}>
-        <button className={modalStyle.close_btn} onClick={() => setCameraClicked(false)}>
+        <button
+          className={modalStyle.close_btn}
+          onClick={() => setCameraClicked(false)}
+        >
           X
         </button>
 
@@ -57,7 +100,26 @@ function CameraModal() {
             onChange={handleFileChange}
           />
         </div>
-        {img && <img src={img} alt="Captured Preview" className={modalStyle.preview_image} />}
+
+        {isLoading && <p className={modalStyle.loading_text}>Processing image...</p>}
+        {error && <p className={modalStyle.error_text}>{error}</p>}
+
+        {img && (
+          <>
+            <img
+              src={img}
+              alt="Captured Preview"
+              className={modalStyle.preview_image}
+            />
+            {prediction && (
+              <div className={modalStyle.result_container}>
+                <h3>Prediction Result:</h3>
+                <p><strong>Landmark:</strong> {prediction}</p>
+                <p><strong>Confidence:</strong> {confidence}</p>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

@@ -27,3 +27,11 @@
 .nav-link:hover {
   color: #634323 !important;
 }
+
+@media (max-width: 992px) {
+  .navbar {
+    background-color: rgb(38, 22, 0)!important;
+ 
+  }
+ 
+}

@@ -75,7 +75,7 @@ function Signup() {
         }
         // http://travelguide.runasp.net/api/UsersIdentity/Register
         try {
-            const res = await axios.post('http://localhost:3004/users', {
+            const res = await axios.post('http://localhost:3002/users', {
                 email,
                 dispalyName: userName,
                 password,
