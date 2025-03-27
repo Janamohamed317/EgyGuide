@@ -11,10 +11,13 @@ import CameraModal from "../CameraModal/CameraModal";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { setCameraClicked, cameraClicked } = useContext(AppContext);
+  const { setCameraClicked, cameraClicked ,LoggedOut} = useContext(AppContext);
+  
   const handleClick = () => {
-    navigate("/trip-input");
-  };
+    LoggedOut ? 
+    navigate("/signup")  : navigate("/trip-input")  
+
+  }
 
   const FadeInVariant = {
     initial: { opacity: 0 },

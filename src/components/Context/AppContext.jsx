@@ -12,18 +12,21 @@ const AppContextProvider = (props) => {
     const handleCheckboxChange = () => {
         setShowPassword((prev) => !prev);
     };
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://localhost:3001/cities');
-                setCities(response.data[0]['$values']);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
 
-        fetchData();
-    }, []);
+    
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/$values');
+        setCities(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData(); 
+  }, []);
+
     const contextValue = {
         setShowPassword,
         showPassword,

@@ -73,50 +73,51 @@ function Signup() {
             });
             return;
         }
-        // http://travelguide.runasp.net/api/UsersIdentity/Register
-        try {
-            const res = await axios.post('http://localhost:3002/users', {
-                email,
-                dispalyName: userName,
-                password,
+        navigate("/Signin");
+      
+        // try {
+        //     const res = await axios.post('http://travelguide.runasp.net/api/UsersIdentity/Register', {
+        //         email,
+        //         dispalyName: userName,
+        //         password,
               
-            });
+        //     });
 
-            if (res.status === 200 || res.status === 201) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Signup Successful!',
-                    text: 'You have successfully signed up.',
-                    confirmButtonText: 'OK',
-                }).then(() => {
-                    setShowPassword(false);
-                    navigate("/Signin");
-                    console.log(res.data);
+        //     if (res.status === 200 || res.status === 201) {
+        //         Swal.fire({
+        //             icon: 'success',
+        //             title: 'Signup Successful!',
+        //             text: 'You have successfully signed up.',
+        //             confirmButtonText: 'OK',
+        //         }).then(() => {
+        //             setShowPassword(false);
+        //             navigate("/Signin");
+        //             console.log(res.data);
                     
-                });
-            } else if (res.status === 409) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Signup Failed',
-                    text: 'Username or email is already taken. Please try another one.',
-                    confirmButtonText: 'OK',
-                });
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Signup Failed',
-                    text: 'Something went wrong. Please try again.',
-                    confirmButtonText: 'OK',
-                });
-            }
-        } catch (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: error.response?.data?.message || 'There was an error signing up. Please try again.',
-                confirmButtonText: 'OK',
-            });
-        }
+        //         });
+        //     } else if (res.status === 409) {
+        //         Swal.fire({
+        //             icon: 'warning',
+        //             title: 'Signup Failed',
+        //             text: 'Username or email is already taken. Please try another one.',
+        //             confirmButtonText: 'OK',
+        //         });
+        //     } else {
+        //         Swal.fire({
+        //             icon: 'error',
+        //             title: 'Signup Failed',
+        //             text: 'Something went wrong. Please try again.',
+        //             confirmButtonText: 'OK',
+        //         });
+        //     }
+        // } catch (error) {
+        //     Swal.fire({
+        //         icon: 'error',
+        //         title: 'Error',
+        //         text: error.response?.data?.message || 'There was an error signing up. Please try again.',
+        //         confirmButtonText: 'OK',
+        //     });
+        // }
     };
 
     return (

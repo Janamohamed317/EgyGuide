@@ -15,6 +15,24 @@ body {
   src: url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
 }
 
-:root {
-  --cards-background: rgb(106, 69, 0);
+@font-face {
+  font-family: 'logo';
+  src: url('D:\\Graduation Project\\EgyGuide-All\\EgyGuide\\src\\assets\\logo.ttf') format('truetype');
+}
+
+
+
+.camera_icon {
+  align-self: flex-end;
+  font-size: 2rem;
+  margin: 2rem;
+  color: #ffffff;
+  cursor: pointer;
+  background-color: rgb(106, 69, 0);
+  padding: 2rem;
+  border-radius: 3rem;
+}
+
+.camera_icon:hover {
+  background-color: rgb(201, 165, 112);
 }

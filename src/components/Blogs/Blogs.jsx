@@ -10,20 +10,46 @@ function Blogs() {
     const [blogContent, setBlogContent] = useState('');
     const { blogs, setBlogs } = useContext(AppContext);
     const [searchedItem, setSearchedItem] = useState('');
- 
+
+    useEffect(() => {
+        fetchBlogs();
+    }, []);
+
+    const fetchBlogs = () => {
+        axios.get('http://localhost:3004/$values')
+            .then(res => {
+                setBlogs(res.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    };
+
 
     const handleBlogSubmit = () => {
         if (blogContent.trim()) {
-            setBlogs([...blogs, blogContent]);
-            setBlogContent('');
+            const newBlog = {
+                blog: blogContent,
+                userId: 'ee5f7676-03bb-4d60-ac00-f6f9f1595dbb' 
+            };
+
+            axios.post('http://localhost:3004/$values', newBlog)
+                .then(res => {
+                    fetchBlogs();
+                    setBlogContent('');
+                })
+                .catch(error => {
+                    console.error('Error posting blog:', error);
+                });
         }
     };
 
     const displayedBlogs = searchedItem
         ? blogs.filter(blog =>
-            blog.toLowerCase().includes(searchedItem.toLowerCase())
+            blog.blog.toLowerCase().includes(searchedItem.toLowerCase())
         )
         : blogs;
+
     return (
         <>
             <Navbar />
@@ -64,7 +90,7 @@ function Blogs() {
                         <h3>No blogs found</h3>
                     ) : (
                         displayedBlogs.map((blog) => (
-                            <Blog key={blog} blog={blog} />
+                            <Blog key={blog.id} blog={blog.blog} />
                         ))
                     )}
                 </div>

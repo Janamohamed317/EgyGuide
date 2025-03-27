@@ -25,6 +25,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 20px;
+    background-color: #91804f !important;
     overflow: hidden;
     color: white;
     background-color: var(--cards-background);

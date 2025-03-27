@@ -1,7 +1,7 @@
 import "./App.css";
 import Signin from "./components/Signin/Signin";
 import Signup from "./components/Signup/Signup";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import UserInput from "./components/UserInput/UserInput";
 import TripPlan from "./components/TripPlan/TripPlan";
 import Admin from "./components/AdminPanel/Admin";
@@ -19,7 +19,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/edit" element={<EditCity />} />
+        {/* <Route path="/edit" element={<EditCity />} /> */}
         <Route path="/trip-input" element={<UserInput />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/signin" element={<Signin />} />

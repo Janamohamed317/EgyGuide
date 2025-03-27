@@ -11,7 +11,6 @@ function Cities() {
   const navigate = useNavigate();
 
 
-
   const handleDelete = (id) => {
     axios.delete(`http://localhost:3001/cities/${id}`)
       .then(() => {

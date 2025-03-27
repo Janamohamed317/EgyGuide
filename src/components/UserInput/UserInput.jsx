@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import styles2 from "./UserInput.module.css";
-import { governorates } from "../../assets/assets";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,9 +8,10 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { AppContext } from '../Context/AppContext';
 import CameraModal from "../CameraModal/CameraModal";
+import { citiess } from "../../assets/assets";
 
 function UserInput() {
-  const { setCameraClicked, cameraClicked ,cities } = useContext(AppContext);
+  const { setCameraClicked, cameraClicked, cities } = useContext(AppContext);
   const [budget, setBudget] = useState(0);
   const [interests, setInterests] = useState("");
   const [city, setCity] = useState("");
@@ -94,7 +94,7 @@ function UserInput() {
                 onChange={(e) => setCity(e.target.value)}
               >
                 <option disabled selected >Choose...</option>
-                {cities.map((city) => (
+                {citiess.map((city) => (
                   <option key={city.id} value={city.name} className={styles2.options}>
                     {city.name}
                   </option>
@@ -123,7 +123,7 @@ function UserInput() {
                 onChange={(e) => setInterests(e.target.value)}
               >
                 <option disabled selected >Choose...</option>
-                {cities.map((city) => (
+                {citiess.map((city) => (
                   <option key={city.id} value={city.name} className={styles2.options}>
                     {city.name}
                   </option>
