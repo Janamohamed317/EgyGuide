@@ -29,7 +29,7 @@ function Carousel({topPlaces}) {
                 modules={[EffectCoverflow, Pagination]}
                 className="swiper-container"
             >
-                {topPlaces["$values"].map((slide) => (
+                {topPlaces.map((slide) => (
                     <SwiperSlide key={slide.id} className="swiper-slide">
                         <img src={slide.imageUrl} alt={slide.alt} />
                         <p className="slide-text">{slide.name}</p>

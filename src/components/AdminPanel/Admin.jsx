@@ -36,7 +36,7 @@ function Admin() {
         <MenuIcon sx={{ color: 'white', fontSize: '3rem' }} />
       </IconButton>
       <Drawer open={openSideBar} onClose={() => setOpenSideBar(false)}>
-        <Box sx={{ width: '20vw', backgroundColor: 'beige', color: 'black', height: '100vh' }}>
+        <Box sx={{ width: '20rem', backgroundColor: 'beige', color: 'black', minHeight: '69.5rem' }}>
           {Admin_Dashboard_items.map((item) => (
             <List key={item.id}>
               <ListItem disablePadding>

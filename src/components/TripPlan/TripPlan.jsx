@@ -9,12 +9,13 @@ import Footer from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
 import { AppContext } from '../Context/AppContext';
 import CameraModal from "../CameraModal/CameraModal";
+import { citiess } from "../../assets/assets";
 
 function TripPlan() {
   const { setCameraClicked, cameraClicked, cities } = useContext(AppContext);
   const Location = useLocation();
   const { days, city } = Location.state;
-  const selectedCity = cities.find((place) => place.name === city);
+  const selectedCity = citiess.find((place) => place.name === city);
   const daysArray = Array.from({ length: days }, (_, index) => index + 1);
 
 
