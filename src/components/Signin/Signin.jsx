@@ -11,11 +11,13 @@ function Signin() {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const { showPassword, handleCheckboxChange, setLoggedOut,setUserName } = useContext(AppContext);
+  const [loading, setLoading] = useState(false);
+  const { showPassword, handleCheckboxChange, setIsLoggedIn, setUserName, setUserID } = useContext(AppContext);
   const navigate = useNavigate();
 
   const ValidateSignIn = (field, value) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{6,}$/
 
     if (field === "email") {
       if (!value) {
@@ -28,8 +30,8 @@ function Signin() {
     } else if (field === "password") {
       if (!value) {
         setPasswordError("Password is required");
-      } else if (value.length < 6) {
-        setPasswordError("Password must be at least 6 characters");
+      } else if (!passwordRegex.test(value)) {
+        setPasswordError('Password must contain: 6+ chars, 1 uppercase, 1 lowercase, 1 number, and 1 special character (!@#$%^&*)');
       } else {
         setPasswordError("");
       }
@@ -40,49 +42,63 @@ function Signin() {
     e.preventDefault();
     ValidateSignIn("email", email);
     ValidateSignIn("password", password);
-    setLoggedOut(false)
-    navigate('/home')
-    if (!emailError && !passwordError) {
-      try {
-        const response = await axios.post("http://localhost:3004/users", {
-          email,
-          password,
-        });
 
-        if (response.status === 200) {
-          Swal.fire({
-            icon: "success",
-            title: "Login Successful!",
-            text: "You have successfully signed in.",
-            confirmButtonText: "OK",
-          }).then(() => {
-            navigate("/home");
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Login Failed",
-            text: response.data.message || "Invalid email or password.",
-            confirmButtonText: "OK",
-          });
-        }
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text:
-            error.response?.data?.message ||
-            "There was an error signing in. Please try again.",
-          confirmButtonText: "OK",
-        });
-      }
-    } else {
+    if (emailError || passwordError) {
       Swal.fire({
         icon: "error",
         title: "Validation Error",
         text: "Please fix the errors in the form before submitting.",
         confirmButtonText: "OK",
       });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        "http://travelguide.runasp.net/api/UsersIdentity/Login",
+        { email, password },
+      );
+
+      console.log("Login response:", response.data);
+
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userName", response.data.dispalyName);
+        localStorage.setItem("userID", response.data.$id);
+
+        setUserName(response.data.dispalyName);
+        setUserID(response.data.id)
+        setIsLoggedIn(true)
+        await Swal.fire({
+          icon: "success",
+          title: "Login Successful!",
+          text: "You have successfully signed in.",
+          confirmButtonText: "OK",
+        });
+
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("Login error:", error.response?.data || error.message);
+
+      let errorMessage = "There was an error signing in. Please try again.";
+      if (error.response) {
+        errorMessage = error.response.data?.message ||
+          (error.response.status === 401
+            ? "Invalid email or password"
+            : "Login failed");
+      }
+
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: errorMessage,
+        confirmButtonText: "OK",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -131,8 +147,16 @@ function Signin() {
               ></input>
             </div>
 
-            <button className={styles.form_btn} type="submit">
-              <span>Sign in</span>
+            <button
+              className={styles.form_btn}
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className={styles.spinner}></span>
+              ) : (
+                <span>Sign In</span>
+              )}
             </button>
           </form>
           <p className={styles.Login_text2}>

@@ -20,7 +20,7 @@ function Signup() {
 
     const validateField = (field, value) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{6,}$/
         if (field === 'email') {
             if (!value) {
                 setEmailError('Email is required');
@@ -40,9 +40,11 @@ function Signup() {
         } else if (field === 'password') {
             if (!value) {
                 setPasswordError('Password is required');
-            } else if (value.length < 6) {
-                setPasswordError('Password must be at least 6 characters');
-            } else {
+            }
+            else if (!passwordRegex.test(value)) {
+                setPasswordError('Password must contain: 6+ chars, 1 uppercase, 1 lowercase, 1 number, and 1 special character (!@#$%^&*)');
+            }
+            else {
                 setPasswordError('');
             }
         } else if (field === 'confirmedPassword') {
@@ -73,51 +75,51 @@ function Signup() {
             });
             return;
         }
-        navigate("/Signin");
-      
-        // try {
-        //     const res = await axios.post('http://travelguide.runasp.net/api/UsersIdentity/Register', {
-        //         email,
-        //         dispalyName: userName,
-        //         password,
-              
-        //     });
 
-        //     if (res.status === 200 || res.status === 201) {
-        //         Swal.fire({
-        //             icon: 'success',
-        //             title: 'Signup Successful!',
-        //             text: 'You have successfully signed up.',
-        //             confirmButtonText: 'OK',
-        //         }).then(() => {
-        //             setShowPassword(false);
-        //             navigate("/Signin");
-        //             console.log(res.data);
-                    
-        //         });
-        //     } else if (res.status === 409) {
-        //         Swal.fire({
-        //             icon: 'warning',
-        //             title: 'Signup Failed',
-        //             text: 'Username or email is already taken. Please try another one.',
-        //             confirmButtonText: 'OK',
-        //         });
-        //     } else {
-        //         Swal.fire({
-        //             icon: 'error',
-        //             title: 'Signup Failed',
-        //             text: 'Something went wrong. Please try again.',
-        //             confirmButtonText: 'OK',
-        //         });
-        //     }
-        // } catch (error) {
-        //     Swal.fire({
-        //         icon: 'error',
-        //         title: 'Error',
-        //         text: error.response?.data?.message || 'There was an error signing up. Please try again.',
-        //         confirmButtonText: 'OK',
-        //     });
-        // }
+        try {
+            const res = await axios.post('http://travelguide.runasp.net/api/UsersIdentity/Register', {
+                email,
+                dispalyName: userName,
+                password,
+
+            });
+
+            if (res.status === 200 || res.status === 201) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Signup Successful!',
+                    text: 'You have successfully signed up.',
+                    confirmButtonText: 'OK',
+                }).then(() => {
+                    setShowPassword(false);
+                    navigate("/Signin");
+                    console.log(res.data);
+
+                });
+            } else if (res.status === 409) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Signup Failed',
+                    text: 'Username or email is already taken. Please try another one.',
+                    confirmButtonText: 'OK',
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Signup Failed',
+                    text: 'Something went wrong. Please try again.',
+                    confirmButtonText: 'OK',
+                });
+            }
+        } catch (error) {
+            console.log(error.response?.data)
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.response?.data?.message || 'There was an error signing up. Please try again.',
+                confirmButtonText: 'OK',
+            });
+        }
     };
 
     return (

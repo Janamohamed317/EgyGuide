@@ -17,8 +17,8 @@ function CameraModal() {
     if (file) {
       const imgURL = URL.createObjectURL(file);
       setImg(imgURL);
-      setPrediction(null); // Reset previous prediction
-      setError(null); // Reset previous error
+      setPrediction(null); 
+      setError(null);
 
       try {
         setIsLoading(true);

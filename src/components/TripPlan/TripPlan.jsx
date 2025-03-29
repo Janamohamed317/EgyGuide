@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import styles3 from "./TripPlan.module.css";
 import { motion } from "motion/react";
@@ -9,14 +9,37 @@ import Footer from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
 import { AppContext } from '../Context/AppContext';
 import CameraModal from "../CameraModal/CameraModal";
-import { citiess } from "../../assets/assets";
+// import { citiess } from "../../assets/assets";
+import axios from "axios"
+
 
 function TripPlan() {
   const { setCameraClicked, cameraClicked, cities } = useContext(AppContext);
   const Location = useLocation();
-  const { days, city } = Location.state;
-  const selectedCity = citiess.find((place) => place.name === city);
+  const { days, cityID } = Location.state;
   const daysArray = Array.from({ length: days }, (_, index) => index + 1);
+  const [loading, setLoading] = useState(true);
+  const [selectedCity, setSelectedCity] = useState([])
+
+  useEffect(() => {
+    fetchCity();
+  }, []);
+
+  const fetchCity = async () => {
+    setLoading(true)
+    try {
+      const res = await axios.get(`http://travelguide.runasp.net/api/Governorates/${cityID}`)
+      setSelectedCity(res.data)
+
+    }
+    catch (err) {
+      console.log('error fetching data');
+
+    }
+    finally {
+      setLoading(false)
+    }
+  };
 
 
   const FadeInVariant = {
@@ -34,11 +57,10 @@ function TripPlan() {
           variants={FadeInVariant}
           initial='initial'
           whileInView='whileInView'>
-          <img src={selectedCity.imageUrl} alt={city} className={styles3.city_image} />
-          <p className={styles3.trip_name}>Enjoy Your Trip to {city}</p>
-        </motion.div >
+          <img src={selectedCity.imageUrl} className={styles3.city_image} alt={selectedCity.name} />
+          <p className={styles3.trip_name}>Enjoy Your Trip to {selectedCity.name}</p>
+        </motion.div>
         <hr className={styles3.line} />
-
 
         <motion.div className={styles3.about_container}
           variants={FadeInVariant}
@@ -47,10 +69,10 @@ function TripPlan() {
           <p className={styles3.about_txt}>
             About {selectedCity.name}
           </p>
-          <p >
+          <p>
             {selectedCity.description}
           </p>
-        </motion.div >
+        </motion.div>
 
         <hr className={styles3.line} />
 
@@ -69,17 +91,20 @@ function TripPlan() {
               </div>
             ))}
           </div>
-        </motion.div >
+        </motion.div>
 
         <hr className={styles3.line} />
+
         <motion.div
           className={styles3.top_picks}
           variants={FadeInVariant}
           initial='initial'
           whileInView='whileInView'>
-
-          <Carousel topPlaces={selectedCity.topPlaces}/>
+          {selectedCity.topPlaces && selectedCity.topPlaces['$values'] && (
+            <Carousel topPlaces={selectedCity.topPlaces['$values']} />
+          )}
         </motion.div>
+
         <FontAwesomeIcon icon={faCamera} className='camera_icon' onClick={() => setCameraClicked(true)} />
         <Footer />
       </div>

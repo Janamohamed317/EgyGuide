@@ -8,17 +8,20 @@ function Users() {
     const [deletingUser, setDeletingUser] = useState(null);
 
     // useEffect(() => {
-    //     axios.get('http://localhost:3002/users')
-    //         .then(res => {
-    //             setUsersList(res.data);
-              
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching data:', error);
-            
+    //     const fetchUsers = async () => {
+    //         try {
+    //             const res = await axios.get('');
+    //             // console.log(res.data);
                 
-    //         });
+    //             setUsersList(res.data);
+    //         } catch (error) {
+    //             console.error('Error fetching data:', error);
+    //         }
+    //     };
+    
+    //     fetchUsers();
     // }, []);
+    
 
     const handleDelete = (id) => {
         axios.delete(`http://localhost:3002/users/${id}`)

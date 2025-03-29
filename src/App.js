@@ -11,15 +11,19 @@ import CurrencyConverter from "./components/CurrencyConverter/CurrencyConverter"
 import ExploreEgypt from "./components/ExploreEgypt/ExploreEgypt";
 import Blogs from "./components/Blogs/Blogs";
 import Profile from "./components/Profile/Profile";
+import { AppContext } from "./components/Context/AppContext";
+import { useContext } from "react";
 
 function App() {
+    const { LoggedOut, handleLogout } = useContext(AppContext);
+    
 
 
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/edit" element={<EditCity />} /> */}
+        <Route path="/edit" element={<EditCity />} />
         <Route path="/trip-input" element={<UserInput />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/signin" element={<Signin />} />

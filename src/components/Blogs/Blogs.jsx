@@ -8,47 +8,58 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 function Blogs() {
     const [blogContent, setBlogContent] = useState('');
-    const { blogs, setBlogs } = useContext(AppContext);
+    const { blogs, setBlogs, userID } = useContext(AppContext);
     const [searchedItem, setSearchedItem] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchBlogs();
     }, []);
 
-    const fetchBlogs = () => {
-        axios.get('http://localhost:3004/$values')
-            .then(res => {
-                setBlogs(res.data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    };
+    const fetchBlogs = async () => {
+        setLoading(true)
+        try {
+            const res = await axios.get('http://travelguide.runasp.net/api/Blogs')
+            setBlogs(res.data['$values'])
 
+        }
+        catch (err) {
+            console.log('error fetching data');
+
+        }
+        finally {
+            setLoading(false)
+        }
+    };
 
     const handleBlogSubmit = () => {
         if (blogContent.trim()) {
-            const newBlog = {
-                blog: blogContent,
-                userId: 'ee5f7676-03bb-4d60-ac00-f6f9f1595dbb' 
-            };
-
-            axios.post('http://localhost:3004/$values', newBlog)
-                .then(res => {
-                    fetchBlogs();
-                    setBlogContent('');
+            try {
+                const res = axios.post('http://travelguide.runasp.net/api/Blogs', {
+                    blog: blogContent,
+                    userId: "ee5f7676-03bb-4d60-ac00-f6f9f1595dbb"
                 })
-                .catch(error => {
-                    console.error('Error posting blog:', error);
-                });
-        }
-    };
+                if (res.status === 200 || res.status === 201) {
+                    setBlogContent('')
+                    fetchBlogs()
+                }
+            }
+            catch (err) {
+                console.log('error');
+
+            }
+        };
+    }
+
+   
 
     const displayedBlogs = searchedItem
         ? blogs.filter(blog =>
             blog.blog.toLowerCase().includes(searchedItem.toLowerCase())
         )
         : blogs;
+
+
 
     return (
         <>
@@ -86,13 +97,15 @@ function Blogs() {
                     </div>
                 </div>
                 <div className='d-flex justify-content-center align-items-center flex-wrap gap-5'>
-                    {searchedItem && displayedBlogs.length === 0 ? (
-                        <h3>No blogs found</h3>
-                    ) : (
-                        displayedBlogs.map((blog) => (
-                            <Blog key={blog.id} blog={blog.blog} />
-                        ))
-                    )}
+                    {
+                        loading ? (<h3> loading.. </h3>) :
+                            searchedItem && displayedBlogs.length === 0 ? (
+                                <h3>No blogs found</h3>
+                            ) : (
+                                displayedBlogs.map((blog) => (
+                                    <Blog key={blog.id} blog={blog.blog} />
+                                ))
+                            )}
                 </div>
             </div>
             <Footer />

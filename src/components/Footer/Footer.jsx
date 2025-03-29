@@ -8,7 +8,6 @@ function Footer() {
   return (
     <div className={footer.main_container}>
       <div className='d-flex flex-column align-items-center mb-5'>
-        
         <div className='d-flex flex-column gap-2 '>
           <span className='display-6'>EGYGuide</span>
           <span className='lead'>Enhancing your exploration of Egypt with ease and convenience.</span>

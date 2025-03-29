@@ -8,18 +8,28 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { AppContext } from '../Context/AppContext';
 import CameraModal from "../CameraModal/CameraModal";
-import { citiess } from "../../assets/assets";
+import { User_Category } from "../../assets/assets";
 
 function UserInput() {
-  const { setCameraClicked, cameraClicked, cities } = useContext(AppContext);
+  const { setCameraClicked, cameraClicked, cities, isLoggedIn } = useContext(AppContext);
   const [budget, setBudget] = useState(0);
   const [interests, setInterests] = useState("");
-  const [city, setCity] = useState("");
+  const [cityID, setCityID] = useState("");
+  const [userType, setUserType] = useState("");
   const [days, setDays] = useState(0);
   const navigate = useNavigate();
 
   const handleTripSelection = () => {
-    if (!days || !city || !budget || !interests) {
+    if (!isLoggedIn) {
+      Swal.fire({
+        icon: "error",
+        title: "You have to Login First",
+        text: 'Please Login or Create an Account to Continue',
+        confirmButtonText: 'Ok'
+      })
+      return
+    }
+    if (!days || !budget || !interests || !userType) {
       Swal.fire({
         icon: "error",
         title: "Validation Error",
@@ -58,10 +68,8 @@ function UserInput() {
     }
     navigate("/Trip-plan", {
       state: {
-        city: city,
+        cityID: cityID,
         days: days,
-        budget: budgetNumber,
-        interests: interests,
       },
     });
   };
@@ -72,69 +80,86 @@ function UserInput() {
 
       <Navbar />
       <div className={styles2.main_container}>
-        <div className={styles2.user_input_container}>
-          <p className={styles2.user_input_text}>Enter Your Trip Details</p>
-          <div className={`${styles2.user_inputs} d-flex justify-content-around`}>
-            <div className={`form-group ${styles2.form_group}`}>
-              <label htmlFor="days" className={styles2.input_labels}>Number Of Days:</label>
-              <br />
-              <input
-                type="number"
-                id="days"
-                className={` ${styles2.inputs}`}
-                onChange={(e) => setDays(Number(e.target.value))}
-              />
-            </div>
-            <div className={`form-group ${styles2.form_group}`}>
-              <label htmlFor="destination" className={styles2.input_labels}>Destination:</label>
-              <br />
-              <select
-                id="destination"
-                className={`${styles2.inputs}`}
-                onChange={(e) => setCity(e.target.value)}
-              >
-                <option disabled selected >Choose...</option>
-                {citiess.map((city) => (
-                  <option key={city.id} value={city.name} className={styles2.options}>
-                    {city.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className={`${styles2.user_inputs} d-flex justify-content-around`}>
-            <div className={`form-group ${styles2.form_group}`}>
-              <label htmlFor="budget" className={styles2.input_labels}>Budget in EGP:</label>
-              <br />
-              <input
-                type="text"
-                id="budget"
-                className={` ${styles2.inputs}`}
-                onChange={(e) => setBudget(e.target.value)}
-              />
-            </div>
-            <div className={`form-group ${styles2.form_group}`}>
-              <label htmlFor="interests" className={styles2.input_labels}>Interests:</label>
-              <br />
-              <select
-                id="intersets"
-                className={`${styles2.inputs}`}
-                onChange={(e) => setInterests(e.target.value)}
-              >
-                <option disabled selected >Choose...</option>
-                {citiess.map((city) => (
-                  <option key={city.id} value={city.name} className={styles2.options}>
-                    {city.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <button className={styles2.input_btn} onClick={handleTripSelection}>
-            Next
-          </button>
+        <p className="fs-1 mt-5">Enter Your Trip Details</p>
+        <div className={`form-group`}>
+          <label htmlFor="days" className={styles2.input_labels}>Number Of Days:</label>
+          <br />
+          <input
+            type="number"
+            className={styles2.inputs}
+            id="days"
+            onChange={(e) => setDays(Number(e.target.value))}
+          />
         </div>
+
+        <div className='form-group'>
+          <label htmlFor="budget" className={styles2.input_labels}>Budget in EGP:</label>
+          <br />
+          <input
+            type="text"
+            id="budget"
+            className={` ${styles2.inputs}`}
+            onChange={(e) => setBudget(e.target.value)}
+          />
+        </div>
+
+        <div className='form-group'>
+          <label htmlFor="destination" className={styles2.input_labels}>Destination:</label>
+          <br />
+          <select
+            id="destination"
+            className={styles2.inputs}
+            onChange={(e) => setCityID(e.target.value)}
+          >
+            <option disabled selected value >Choose...</option>
+            {cities.map((city) => (
+              <option key={city.id} value={city.id} className={styles2.options}>
+                {city.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className='form-group'>
+          <label htmlFor="interests" className={styles2.input_labels}>Interests:</label>
+          <br />
+          <select
+            id="intersets"
+            className={`${styles2.inputs}`}
+            onChange={(e) => setInterests(e.target.value)}
+          >
+            <option disabled selected value >Choose...</option>
+            {User_Category.map((type) => (
+              <option key={type.id} value={type.text} className={styles2.options}>
+                {type.text}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className='form-group'>
+          <label htmlFor="interests" className={styles2.input_labels}>Visitor Category:</label>
+          <br />
+          <select
+            id="intersets"
+            className={`${styles2.inputs}`}
+            onChange={(e) => setUserType(e.target.value)}
+          >
+            <option disabled selected value >Choose...</option>
+            {User_Category.map((type) => (
+              <option key={type.id} value={type.text} className={styles2.options}>
+                {type.text}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button className={styles2.input_btn} onClick={handleTripSelection}>
+          Next
+        </button>
+
+      </div>
+      <div className="d-flex align-items-end justify-content-end">
         <FontAwesomeIcon icon={faCamera} className='camera_icon' onClick={() => setCameraClicked(true)} />
       </div>
       <Footer />
