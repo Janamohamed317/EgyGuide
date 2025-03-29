@@ -31,7 +31,7 @@ function Carousel({topPlaces}) {
             >
                 {topPlaces.map((slide) => (
                     <SwiperSlide key={slide.id} className="swiper-slide">
-                        <img src={slide.imageUrl} alt={slide.alt} />
+                        <img src={slide.imageUrl} alt={slide.alt} className='slide-img'/>
                         <p className="slide-text">{slide.name}</p>
                     </SwiperSlide>
                 ))}
