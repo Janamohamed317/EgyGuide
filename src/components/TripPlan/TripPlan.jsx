@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState, Suspense, lazy } from "react";
 import { useLocation } from "react-router";
 import styles3 from "./TripPlan.module.css";
-import { motion } from "motion/react";
-import Carousel from "../Carousel/Carousel";
+import { motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import Footer from "../Footer/Footer";
@@ -11,17 +10,24 @@ import { AppContext } from '../Context/AppContext';
 import CameraModal from "../CameraModal/CameraModal";
 import axios from "axios";
 
+const Carousel = lazy(() => import("../Carousel/Carousel"));
+
 function TripPlan() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+  }, []);
   const { setCameraClicked, cameraClicked } = useContext(AppContext);
   const location = useLocation();
-  const { days, cityID, travelPlan } = location.state || {};
-  const [selectedCity, setSelectedCity] = useState({});
-  const [prevId, setPrevId] = useState(null);
+  const { plan, cityID } = location.state;
+  // const {  cityID } = location.state;
+
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [selectedCity, setSelectedCity] = useState([]);
+  const [prevId, setPrevId] = useState(null);
 
   useEffect(() => {
-    if (cityID && cityID !== prevId) {
+    if (cityID !== prevId) {
       fetchCity(cityID);
       setPrevId(cityID);
     }
@@ -29,57 +35,28 @@ function TripPlan() {
 
   const fetchCity = async (cityID) => {
     setLoading(true);
-    setError(null);
     try {
-      const response = await axios.get(`https://travelguide.runasp.net/api/Governorates/${cityID}`);
-      setSelectedCity(response.data);
+      const res = await axios.get(`https://travelguide.runasp.net/api/Governorates/${cityID}`);
+      setSelectedCity(res.data);
     } catch (err) {
-      console.error('Error fetching city data:', err);
-      setError('Failed to load city data. Please try again later.');
+      console.log('Error fetching city data');
     } finally {
       setLoading(false);
     }
   };
 
-  const memoizedTopPlaces = React.useMemo(() => {
+  const memoizedTopPlaces = useMemo(() => {
     return selectedCity.topPlaces?.['$values'] || [];
   }, [selectedCity]);
 
-  const renderTravelPlan = () => {
-    if (!travelPlan) return <p>No travel plan available. Please try again.</p>;
-    
-    try {
-      // Try to parse if it's a string
-      const planData = typeof travelPlan === 'string' ? JSON.parse(travelPlan) : travelPlan;
-      
-      return (
-        <div className={styles3.trip_details}>
-          {planData.days?.map((day, dayIndex) => (
-            <div key={`day-${dayIndex}`} className={styles3.day_container}>
-              <details open={dayIndex === 0}>
-                <summary>Day {dayIndex + 1}: {day.title || `Activities`}</summary>
-                {day.activities?.map((activity, actIndex) => (
-                  <div key={`act-${actIndex}`} className={styles3.activity}>
-                    <h3>{activity.name}</h3>
-                    <p><strong>Location:</strong> {activity.location}</p>
-                    <p><strong>Description:</strong> {activity.description}</p>
-                    {activity.time && <p><strong>Time:</strong> {activity.time}</p>}
-                    {activity.cost && <p><strong>Cost:</strong> {activity.cost}</p>}
-                  </div>
-                ))}
-                {day.total_cost && <p className={styles3.dayCost}><strong>Total Day Cost:</strong> {day.total_cost}</p>}
-              </details>
-            </div>
-          ))}
-        </div>
-      );
-    } catch (e) {
-      return (
-        <div className={styles3.planContent}>
-          <pre>{typeof travelPlan === 'string' ? travelPlan : JSON.stringify(travelPlan, null, 2)}</pre>
-        </div>
-      );
-    }
+  const FadeInVariant = {
+    initial: { opacity: 0 },
+    whileInView: { opacity: 1, transition: { duration: 1, ease: "easeInOut" } }
+  };
+
+  const DayAnimationVariant = {
+    initial: { opacity: 0, x: -100 },
+    whileInView: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeInOut" } }
   };
 
   return (
@@ -87,48 +64,76 @@ function TripPlan() {
       {cameraClicked && <CameraModal />}
       <div className={styles3.main_container}>
         <Navbar />
-        
-        {loading ? (
-          <div className={styles3.loading}>Loading city data...</div>
-        ) : error ? (
-          <div className={styles3.error}>{error}</div>
-        ) : (
-          <>
-            {/* City Header Section */}
-            <motion.div className={styles3.city_image_container}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}>
-              <img 
-                src={selectedCity.imageUrl} 
-                alt={selectedCity.name}
-                className={styles3.city_image}
-                onError={(e) => e.target.src = '/default-city.jpg'}
-              />
-              <p className={styles3.trip_name}>Your {days}-Day Trip to {selectedCity.name}</p>
-            </motion.div>
 
-            {/* Travel Plan Section */}
-            <div className={styles3.trip_details_container}>
-              <h2 className={styles3.plan_txt}>Your Personalized Travel Plan</h2>
-              {renderTravelPlan()}
-            </div>
+        <motion.div className={styles3.city_image_container}
+          variants={FadeInVariant}
+          initial="initial"
+          whileInView="whileInView">
+          <img src={selectedCity.imageUrl} className={styles3.city_image} alt={selectedCity.name} />
+          <p className={styles3.trip_name}>Enjoy Your Trip to {selectedCity.name}</p>
+        </motion.div>
+        <hr className={styles3.line} />
 
-            {/* Top Places Carousel */}
-            {memoizedTopPlaces.length > 0 && (
-              <div className={styles3.top_picks}>
-                <h3>Recommended Places in {selectedCity.name}</h3>
-                <Carousel topPlaces={memoizedTopPlaces} />
-              </div>
-            )}
-          </>
-        )}
+        <motion.div className={styles3.about_container}
+          variants={FadeInVariant}
+          initial="initial"
+          whileInView="whileInView">
+          <p className={styles3.about_txt}>
+            About {selectedCity.name}
+          </p>
+          <p>
+            {selectedCity.description}
+          </p>
+        </motion.div>
 
-        <FontAwesomeIcon 
-          icon={faCamera} 
-          className={styles3.camera_icon} 
-          onClick={() => setCameraClicked(true)} 
-        />
+        <hr className={styles3.line} />
+
+        <motion.div className={styles3.trip_details_container}
+          variants={FadeInVariant}
+          initial="initial"
+          whileInView="whileInView">
+          <p className={styles3.plan_txt}>Here is Your Generated Plan</p>
+
+          {/* <h2>Notes:</h2>
+          <p className="fs-4">{plan.notes}</p>
+          <h2>Total Approximate Cost: {plan.total_approximate_cost}</h2>
+          <p className={styles3.plan_txt}>Here is Your Generated Plan</p>
+          <div className={styles3.trip_details}>
+            {plan.days.map((day, index) => (
+              <motion.div key={index} className={styles3.day_container} variants={DayAnimationVariant}>
+                <details>
+                  <summary>{day.day}</summary>
+                  {day.activities.map((activity, index) => (
+                    <div key={index}>
+                      <h1>Activity: {index + 1}</h1>
+                      <p className="fs-2">- Activity: {activity.activity}</p>
+                      <p className="fs-2">- Location: {activity.location}</p>
+                      <p className="fs-2">- Price Range: {activity.price_range}</p>
+                      <p className="fs-2">- Recommended Time to Visit: {activity.time}</p>
+                    </div>
+                  ))}
+                  <p>Approximate Cost for the Day: {day.approximate_cost}</p>
+                </details>
+              </motion.div>
+            ))}
+          </div> */}
+        </motion.div>
+
+        <hr className={styles3.line} />
+
+        {/* Lazy Loaded Carousel */}
+        <Suspense fallback={<div className={styles3.loading}>Loading carousel...</div>}>
+          <motion.div className={styles3.top_picks}
+            variants={FadeInVariant}
+            initial="initial"
+            whileInView="whileInView">
+            {memoizedTopPlaces.length > 0 && <Carousel topPlaces={memoizedTopPlaces} />}
+          </motion.div>
+        </Suspense>
+
+        {/* Camera Icon */}
+        <FontAwesomeIcon icon={faCamera} className='camera_icon' onClick={() => setCameraClicked(true)} />
+
         <Footer />
       </div>
     </>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles2 from "./UserInput.module.css";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
@@ -10,20 +10,64 @@ import { AppContext } from '../Context/AppContext';
 import CameraModal from "../CameraModal/CameraModal";
 import { User_Category, Place_Category } from "../../assets/assets";
 import axios from "axios";
+
 function UserInput() {
+  const API_URL = 'http://localhost:8000';
   const { setCameraClicked, cameraClicked, cities, isLoggedIn } = useContext(AppContext);
   const [planDetails, setPlanDetails] = useState({
     city: '',
     favorite_places: '',
     visitor_type: '',
-    num_days: 0,
-    budget: 0
+    num_days: '',
+    budget: ''
   });
-  const [isLoading, setIsLoading] = useState(false);
+
   const [cityID, setCityID] = useState("");
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleTripSelection = async () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+  }, []);
+  const generatPlan = async () => {
+    setIsLoading(true)
+    navigate("/Trip-plan", {
+      state: {
+        cityID: cityID,
+        days: planDetails.num_days,
+        // plan: res.data,
+      },
+    });
+    // try {
+    //   const res = await axios.post(`${API_URL}/api/travel-plan`, {
+    //     city: planDetails.city,
+    //     favorite_places: planDetails.favorite_places,
+    //     visitor_type: planDetails.visitor_type,
+    //     num_days: planDetails.num_days,
+    //     budget: planDetails.budget
+    //   });
+
+    //   navigate("/Trip-plan", {
+    //     state: {
+    //       cityID: cityID,
+    //       days: planDetails.num_days,
+    //       plan: res.data,
+    //     },
+    //   });
+    // } catch (err) {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Something went wrong',
+    //     text: 'There was an issue generating the plan. Please try again later.',
+    //   });
+    // }
+    // finally {
+    //   setIsLoading(false)
+    // }
+  };
+
+  const handleTripSelection = () => {
     if (!isLoggedIn) {
       Swal.fire({
         icon: "error",
@@ -33,7 +77,7 @@ function UserInput() {
       });
       return;
     }
-    if (!planDetails.num_days || !planDetails.budget || !planDetails.favorite_places ||
+    if (!planDetails.num_days || !planDetails.budget || planDetails.favorite_places.length === 0 ||
       !planDetails.visitor_type || !planDetails.city) {
       Swal.fire({
         icon: "error",
@@ -62,41 +106,7 @@ function UserInput() {
       });
       return;
     }
-
-    setIsLoading(true);
-    try {
-      const requestData = {
-        city: planDetails.city,
-        favorite_places: planDetails.favorite_places,
-        visitor_type: planDetails.visitor_type,
-        num_days: planDetails.num_days.toString(),
-        budget: planDetails.budget.toString()
-      };
-
-      const response = await axios.post('http://localhost:8000/api/travel-plan', requestData, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-
-      navigate("/Trip-plan", {
-        state: {
-          cityID: cityID,
-          days: planDetails.num_days,
-          travelPlan: response.data
-        },
-      });
-    } catch (error) {
-      console.error('Error generating travel plan:', error);
-      Swal.fire({
-        icon: "error",
-        title: "API Error",
-        text: error.response?.data?.detail || "Failed to generate travel plan. Please try again.",
-        confirmButtonText: "OK",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    generatPlan();
   };
 
   return (
@@ -113,7 +123,7 @@ function UserInput() {
             type="number"
             className={styles2.inputs}
             id="days"
-            onChange={(e) => setPlanDetails(prev => ({ ...prev, num_days: Number(e.target.value) }))}
+            onChange={(e) => setPlanDetails(prev => ({ ...prev, num_days: e.target.value.toString() }))} // Store as string
           />
         </div>
 
@@ -124,7 +134,7 @@ function UserInput() {
             type="text"
             id="budget"
             className={` ${styles2.inputs}`}
-            onChange={(e) => setPlanDetails(prev => ({ ...prev, budget: e.target.value }))}
+            onChange={(e) => setPlanDetails(prev => ({ ...prev, budget: e.target.value.toString() }))} // Store as string
           />
         </div>
 
@@ -180,10 +190,16 @@ function UserInput() {
                 onChange={(e) => {
                   const { value, checked } = e.target;
                   setPlanDetails(prev => {
-                    const updatedPlaces = checked
-                      ? prev.favorite_places ? `${prev.favorite_places}, ${value}` : value
-                      : prev.favorite_places.split(', ').filter(place => place !== value).join(', ');
-                    return { ...prev, favorite_places: updatedPlaces };
+                    let newFavoritePlaces = prev.favorite_places.split(", ").filter(place => place !== "");
+                    if (checked) {
+                      newFavoritePlaces.push(value);
+                    } else {
+                      newFavoritePlaces = newFavoritePlaces.filter(place => place !== value);
+                    }
+                    return {
+                      ...prev,
+                      favorite_places: newFavoritePlaces.join(", ")
+                    };
                   });
                 }}
               />
@@ -194,18 +210,22 @@ function UserInput() {
           ))}
         </div>
 
-        <button
-          className={styles2.input_btn}
-          onClick={handleTripSelection}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Generating Plan...' : 'Next'}
-        </button>
+        {
+          isLoading ? <button className={styles2.input_btn} onClick={handleTripSelection}>
+            Generating Plan Please wait...
+          </button> : <button className={styles2.input_btn} onClick={handleTripSelection}>
+            Next
+          </button>
+        }
+
       </div>
 
       <div className="d-flex align-items-end justify-content-end">
         <FontAwesomeIcon icon={faCamera} className='camera_icon' onClick={() => setCameraClicked(true)} />
       </div>
+
+
+
       <Footer />
     </>
   );
