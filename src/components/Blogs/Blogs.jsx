@@ -6,9 +6,10 @@ import axios from 'axios';
 import { AppContext } from '../Context/AppContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
 function Blogs() {
     const [blogContent, setBlogContent] = useState('');
-    const { blogs, setBlogs, userID } = useContext(AppContext);
+    const { blogs, setBlogs, userID, isLoggedIn } = useContext(AppContext);
     const [searchedItem, setSearchedItem] = useState('');
     const [loading, setLoading] = useState(true);
 
@@ -25,7 +26,6 @@ function Blogs() {
         }
         catch (err) {
             console.log('error fetching data');
-
         }
         finally {
             setLoading(false)
@@ -33,6 +33,15 @@ function Blogs() {
     };
 
     const handleBlogSubmit = async () => {
+        if (!isLoggedIn) {
+            Swal.fire({
+                title: 'Please Login First',
+                text: 'You need to login to post a blog',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            })
+            return
+        }
         if (blogContent.trim()) {
             try {
                 const res = await axios.post(`https://travelguide.runasp.net/api/Blogs`, {

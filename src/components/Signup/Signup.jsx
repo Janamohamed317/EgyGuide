@@ -88,6 +88,7 @@ function Signup() {
                 password,
 
             });
+            console.log(res.data);
 
             if (res.status === 200 || res.status === 201) {
                 Swal.fire({

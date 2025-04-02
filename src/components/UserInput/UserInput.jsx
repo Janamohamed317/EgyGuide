@@ -9,21 +9,21 @@ import Footer from "../Footer/Footer";
 import { AppContext } from '../Context/AppContext';
 import CameraModal from "../CameraModal/CameraModal";
 import { User_Category, Place_Category } from "../../assets/assets";
-
+import axios from "axios";
 function UserInput() {
   const { setCameraClicked, cameraClicked, cities, isLoggedIn } = useContext(AppContext);
   const [planDetails, setPlanDetails] = useState({
     city: '',
-    favorite_places: [],
+    favorite_places: '',
     visitor_type: '',
     num_days: 0,
     budget: 0
   });
-
+  const [isLoading, setIsLoading] = useState(false);
   const [cityID, setCityID] = useState("");
   const navigate = useNavigate();
 
-  const handleTripSelection = () => {
+  const handleTripSelection = async () => {
     if (!isLoggedIn) {
       Swal.fire({
         icon: "error",
@@ -33,7 +33,7 @@ function UserInput() {
       });
       return;
     }
-    if (!planDetails.num_days || !planDetails.budget || planDetails.favorite_places.length === 0 ||
+    if (!planDetails.num_days || !planDetails.budget || !planDetails.favorite_places ||
       !planDetails.visitor_type || !planDetails.city) {
       Swal.fire({
         icon: "error",
@@ -62,12 +62,41 @@ function UserInput() {
       });
       return;
     }
-    navigate("/Trip-plan", {
-      state: {
-        cityID: cityID,
-        days: planDetails.num_days,
-      },
-    });
+
+    setIsLoading(true);
+    try {
+      const requestData = {
+        city: planDetails.city,
+        favorite_places: planDetails.favorite_places,
+        visitor_type: planDetails.visitor_type,
+        num_days: planDetails.num_days.toString(),
+        budget: planDetails.budget.toString()
+      };
+
+      const response = await axios.post('http://localhost:8000/api/travel-plan', requestData, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      navigate("/Trip-plan", {
+        state: {
+          cityID: cityID,
+          days: planDetails.num_days,
+          travelPlan: response.data
+        },
+      });
+    } catch (error) {
+      console.error('Error generating travel plan:', error);
+      Swal.fire({
+        icon: "error",
+        title: "API Error",
+        text: error.response?.data?.detail || "Failed to generate travel plan. Please try again.",
+        confirmButtonText: "OK",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -122,7 +151,6 @@ function UserInput() {
           </select>
         </div>
 
-
         <div className="form-group">
           <label htmlFor="visitor_type" className={styles2.input_labels}>Visitor Category:</label>
           <br />
@@ -140,23 +168,23 @@ function UserInput() {
           </select>
         </div>
 
-        <div className="d-flex flex-column  justify-content-center gap-2 mt-5 fs-3 ">
+        <div className="d-flex flex-column justify-content-center gap-2 mt-5 fs-3">
           <h2>Pick your favorite places:</h2>
           {Place_Category.map((type) => (
             <div className="form-check align-items-start" key={type.id}>
               <input
-                className="form-check-input "
+                className="form-check-input"
                 type="checkbox"
                 value={type.text}
                 id={`place-${type.id}`}
                 onChange={(e) => {
                   const { value, checked } = e.target;
-                  setPlanDetails(prev => ({
-                    ...prev,
-                    favorite_places: checked
-                      ? [...prev.favorite_places, value]
-                      : prev.favorite_places.filter(place => place !== value)
-                  }));
+                  setPlanDetails(prev => {
+                    const updatedPlaces = checked
+                      ? prev.favorite_places ? `${prev.favorite_places}, ${value}` : value
+                      : prev.favorite_places.split(', ').filter(place => place !== value).join(', ');
+                    return { ...prev, favorite_places: updatedPlaces };
+                  });
                 }}
               />
               <label className="form-check-label" htmlFor={`place-${type.id}`}>
@@ -166,19 +194,18 @@ function UserInput() {
           ))}
         </div>
 
-
-
-        <button className={styles2.input_btn} onClick={handleTripSelection}>
-          Next
+        <button
+          className={styles2.input_btn}
+          onClick={handleTripSelection}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Generating Plan...' : 'Next'}
         </button>
       </div>
 
       <div className="d-flex align-items-end justify-content-end">
         <FontAwesomeIcon icon={faCamera} className='camera_icon' onClick={() => setCameraClicked(true)} />
       </div>
-      {
-        console.log(planDetails)
-      }
       <Footer />
     </>
   );
