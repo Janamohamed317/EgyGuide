@@ -8,15 +8,19 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { AppContext } from '../Context/AppContext';
 import CameraModal from "../CameraModal/CameraModal";
-import { User_Category } from "../../assets/assets";
+import { User_Category, Place_Category } from "../../assets/assets";
 
 function UserInput() {
   const { setCameraClicked, cameraClicked, cities, isLoggedIn } = useContext(AppContext);
-  const [budget, setBudget] = useState(0);
-  const [interests, setInterests] = useState("");
+  const [planDetails, setPlanDetails] = useState({
+    city: '',
+    favorite_places: [],
+    visitor_type: '',
+    num_days: 0,
+    budget: 0
+  });
+
   const [cityID, setCityID] = useState("");
-  const [userType, setUserType] = useState("");
-  const [days, setDays] = useState(0);
   const navigate = useNavigate();
 
   const handleTripSelection = () => {
@@ -26,10 +30,11 @@ function UserInput() {
         title: "You have to Login First",
         text: 'Please Login or Create an Account to Continue',
         confirmButtonText: 'Ok'
-      })
-      return
+      });
+      return;
     }
-    if (!days || !budget || !interests || !userType) {
+    if (!planDetails.num_days || !planDetails.budget || planDetails.favorite_places.length === 0 ||
+      !planDetails.visitor_type || !planDetails.city) {
       Swal.fire({
         icon: "error",
         title: "Validation Error",
@@ -38,7 +43,7 @@ function UserInput() {
       });
       return;
     }
-    if (days <= 0) {
+    if (planDetails.num_days <= 0) {
       Swal.fire({
         icon: "error",
         title: "Validation Error",
@@ -47,21 +52,12 @@ function UserInput() {
       });
       return;
     }
-    const budgetNumber = Number(budget);
-    if (isNaN(budgetNumber)) {
+    const budgetNumber = Number(planDetails.budget);
+    if (isNaN(budgetNumber) || budgetNumber <= 0) {
       Swal.fire({
         icon: "error",
         title: "Validation Error",
-        text: "Please enter a valid number for budget.",
-        confirmButtonText: "OK",
-      });
-      return;
-    }
-    if (budgetNumber <= 0) {
-      Swal.fire({
-        icon: "error",
-        title: "Validation Error",
-        text: "Please enter a positive number for budget.",
+        text: "Please enter a valid and positive number for budget.",
         confirmButtonText: "OK",
       });
       return;
@@ -69,7 +65,7 @@ function UserInput() {
     navigate("/Trip-plan", {
       state: {
         cityID: cityID,
-        days: days,
+        days: planDetails.num_days,
       },
     });
   };
@@ -77,41 +73,47 @@ function UserInput() {
   return (
     <>
       {cameraClicked && <CameraModal />}
-
       <Navbar />
       <div className={styles2.main_container}>
         <p className="fs-1 mt-5">Enter Your Trip Details</p>
-        <div className={`form-group`}>
+
+        <div className="form-group">
           <label htmlFor="days" className={styles2.input_labels}>Number Of Days:</label>
           <br />
           <input
             type="number"
             className={styles2.inputs}
             id="days"
-            onChange={(e) => setDays(Number(e.target.value))}
+            onChange={(e) => setPlanDetails(prev => ({ ...prev, num_days: Number(e.target.value) }))}
           />
         </div>
 
-        <div className='form-group'>
+        <div className="form-group">
           <label htmlFor="budget" className={styles2.input_labels}>Budget in EGP:</label>
           <br />
           <input
             type="text"
             id="budget"
             className={` ${styles2.inputs}`}
-            onChange={(e) => setBudget(e.target.value)}
+            onChange={(e) => setPlanDetails(prev => ({ ...prev, budget: e.target.value }))}
           />
         </div>
 
-        <div className='form-group'>
+        <div className="form-group">
           <label htmlFor="destination" className={styles2.input_labels}>Destination:</label>
           <br />
           <select
             id="destination"
             className={styles2.inputs}
-            onChange={(e) => setCityID(e.target.value)}
+            onChange={(e) => {
+              const selectedCity = cities.find(city => city.id === Number(e.target.value));
+              if (selectedCity) {
+                setCityID(selectedCity.id);
+                setPlanDetails(prev => ({ ...prev, city: selectedCity.name }));
+              }
+            }}
           >
-            <option disabled selected value >Choose...</option>
+            <option disabled selected>Choose...</option>
             {cities.map((city) => (
               <option key={city.id} value={city.id} className={styles2.options}>
                 {city.name}
@@ -120,15 +122,16 @@ function UserInput() {
           </select>
         </div>
 
-        <div className='form-group'>
-          <label htmlFor="interests" className={styles2.input_labels}>Interests:</label>
+
+        <div className="form-group">
+          <label htmlFor="visitor_type" className={styles2.input_labels}>Visitor Category:</label>
           <br />
           <select
-            id="intersets"
-            className={`${styles2.inputs}`}
-            onChange={(e) => setInterests(e.target.value)}
+            id="visitor_type"
+            className={styles2.inputs}
+            onChange={(e) => setPlanDetails(prev => ({ ...prev, visitor_type: e.target.value }))}
           >
-            <option disabled selected value >Choose...</option>
+            <option disabled selected>Choose...</option>
             {User_Category.map((type) => (
               <option key={type.id} value={type.text} className={styles2.options}>
                 {type.text}
@@ -137,33 +140,46 @@ function UserInput() {
           </select>
         </div>
 
-        <div className='form-group'>
-          <label htmlFor="interests" className={styles2.input_labels}>Visitor Category:</label>
-          <br />
-          <select
-            id="intersets"
-            className={`${styles2.inputs}`}
-            onChange={(e) => setUserType(e.target.value)}
-          >
-            <option disabled selected value >Choose...</option>
-            {User_Category.map((type) => (
-              <option key={type.id} value={type.text} className={styles2.options}>
+        <div className="d-flex flex-column  justify-content-center gap-2 mt-5 fs-3 ">
+          <h2>Pick your favorite places:</h2>
+          {Place_Category.map((type) => (
+            <div className="form-check align-items-start" key={type.id}>
+              <input
+                className="form-check-input "
+                type="checkbox"
+                value={type.text}
+                id={`place-${type.id}`}
+                onChange={(e) => {
+                  const { value, checked } = e.target;
+                  setPlanDetails(prev => ({
+                    ...prev,
+                    favorite_places: checked
+                      ? [...prev.favorite_places, value]
+                      : prev.favorite_places.filter(place => place !== value)
+                  }));
+                }}
+              />
+              <label className="form-check-label" htmlFor={`place-${type.id}`}>
                 {type.text}
-              </option>
-            ))}
-          </select>
+              </label>
+            </div>
+          ))}
         </div>
+
+
 
         <button className={styles2.input_btn} onClick={handleTripSelection}>
           Next
         </button>
-
       </div>
+
       <div className="d-flex align-items-end justify-content-end">
         <FontAwesomeIcon icon={faCamera} className='camera_icon' onClick={() => setCameraClicked(true)} />
       </div>
+      {
+        console.log(planDetails)
+      }
       <Footer />
-
     </>
   );
 }

@@ -65,6 +65,9 @@
 .error_text {
   color: red;
   font-size: 1.4rem;
+  max-width: 25rem;
+  width: 25rem;
+  margin-top: 1rem;
   text-align: left;
   margin-left: 1rem;
 }

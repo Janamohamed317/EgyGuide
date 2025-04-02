@@ -41,17 +41,71 @@ export const imgs = {
 
 
 
-export const users_list = [
-    { name: "jjjj", id: 1, trips: ['Cairo'], email: 'aaaaaa@g.com' },
-
-    { name: "aaaaa", id: 2, trips: ['Alex', 'Cairo'], email: 'aaaa@d' },
-
-    { name: "hhhhhhhhh", id: 3, trips: ['Alex', 'Cairo', 'Luxor'], email: 'aaaaaaaa' },
-
-    { name: "uuuuuu", id: 4, trips: [], email: 'aaaaaaaa' },
-
-    { name: "yyyy", id: 5, trips: [], email: 'aaaaaaaa' },
-
+export const Place_Category = [
+    {
+        id: 1,
+        text: 'Restaurant'
+    },
+    {
+        id: 2,
+        text: 'Tourist Attraction'
+    },
+    {
+        id: 3,
+        text: 'Cafe'
+    },
+    {
+        id: 4,
+        text: 'Coffee Shop'
+    },
+    {
+        id: 5,
+        text: 'Museum'
+    },
+    {
+        id: 6,
+        text: 'Art Gallery'
+    },
+    {
+        id: 7,
+        text: 'Seafood Restaurant'
+    },
+    {
+        id: 8,
+        text: 'Barbecue Restaurant'
+    },
+    {
+        id: 9,
+        text: 'Historical Landmark'
+    },
+    {
+        id: 10,
+        text: 'Fast Food Restaurant'
+    },
+    {
+        id: 11,
+        text: 'Japanese Restaurant'
+    },
+    {
+        id: 12,
+        text: 'Pizza Restaurant'
+    },
+    {
+        id: 13,
+        text: 'Italian Restaurant'
+    },
+    {
+        id: 14,
+        text: 'Park'
+    },
+    {
+        id: 15,
+        text: 'Monument'
+    },
+    {
+        id: 16,
+        text: 'Sandwich Shop'
+    }
 ];
 
 export const Admin_Dashboard_items = [
@@ -206,3 +260,119 @@ export const User_Category = [
     }
 
 ];
+
+export const Plan = [
+    {
+      day: "Day 1",
+      activities: [
+        {
+          activity: "Visit Luxor Temple",
+          location: "Luxor City, Luxor, Luxor Governorate 1362501, Egypt",
+          price_range: "500 EGP",
+          time: "8:00 AM"
+        },
+        {
+          activity: "Explore Luxor Art Gallery",
+          location: "Memnon Street, Al Bairat, Al Qarna, Luxor Governorate 1341472, Egypt",
+          price_range: "Free",
+          time: "11:00 AM"
+        },
+        {
+          activity: "Lunch at White Coffee & Restaurant",
+          location: "Luxor, Karnak, Luxor, Luxor Governorate 1363024, Egypt",
+          price_range: "Moderate (around 200 EGP)",
+          time: "1:00 PM"
+        },
+        {
+          activity: "Visit Karnak Temples",
+          location: "Karnak, Luxor, Luxor Governorate, Egypt",
+          price_range: "600 EGP",
+          time: "3:00 PM"
+        },
+        {
+          activity: "Dinner at El Hussein Restaurant",
+          location: "Hilton St, New, Karnak, Luxor, Luxor Governorate 1363432, Egypt",
+          price_range: "Moderate (around 200 EGP)",
+          time: "7:00 PM"
+        }
+      ],
+      approximate_cost: "1500 EGP"
+    },
+    {
+      day: "Day 2",
+      activities: [
+        {
+          activity: "Visit Valley of the Kings",
+          location: "Luxor, Egypt",
+          price_range: "750 EGP",
+          time: "8:00 AM"
+        },
+        {
+          activity: "Explore Nobles Art Gallery at Luxor temple",
+          location: "Mabad Al Karnak, Luxor City, Luxor, Luxor Governorate 85111, Egypt",
+          price_range: "Free",
+          time: "11:00 AM"
+        },
+        {
+          activity: "Lunch at Cafe & Restaurant Maratonga",
+          location: "Unnamed Road, Al Bairat, Luxor, Luxor Governorate 85958, Egypt",
+          price_range: "Inexpensive (around 200 EGP)",
+          time: "1:00 PM"
+        },
+        {
+          activity: "Visit Temple of Hatshepsut",
+          location: "Luxor, Egypt",
+          price_range: "440 EGP",
+          time: "3:00 PM"
+        },
+        {
+          activity: "Dinner at Arabia Cafe",
+          location: "Luxor Bridge, Gazirat Al Awameyah, Luxor, Luxor Governorate 1362201, Egypt",
+          price_range: "Moderate (around 200 EGP)",
+          time: "7:00 PM"
+        }
+      ],
+      approximate_cost: "1600 EGP"
+    },
+    {
+      day: "Day 3",
+      activities: [
+        {
+          activity: "Visit Luxor Museum",
+          location: "Kornish Al Nile, Luxor City, Luxor, Luxor Governorate 1362503, Egypt",
+          price_range: "400 EGP",
+          time: "8:00 AM"
+        },
+        {
+          activity: "Explore Gallery Bazaar",
+          location: "MJMH+33J, Luxor City, Luxor, Luxor Governorate 1360130, Egypt",
+          price_range: "Free",
+          time: "11:00 AM"
+        },
+        {
+          activity: "Lunch at Blend Cafe",
+          location: "MJRR+F32, Omar Ali, Gazirat Al Awameyah, Luxor, Luxor Governorate 1362263, Egypt",
+          price_range: "Inexpensive (around 200 EGP)",
+          time: "1:00 PM"
+        },
+        {
+          activity: "Visit Temple of Isis",
+          location: "Luxor, Egypt",
+          price_range: "100 EGP",
+          time: "3:00 PM"
+        },
+        {
+          activity: "Dinner at Nubian House",
+          location: "Al Bairat, Luxor, Luxor Governorate 1345173, Egypt",
+          price_range: "Inexpensive (around 200 EGP)",
+          time: "7:00 PM"
+        }
+      ],
+      approximate_cost: "1200 EGP"
+    },
+    {
+      total_approximate_cost: "4300 EGP",
+      notes: "The itinerary includes a mix of cultural sites, art galleries, and dining options. The approximate costs are based on the provided information and may vary depending on individual preferences and exchange rates. It is assumed that the visitor will purchase tickets for the cultural sites and pay for meals and transportation separately. The overall budget for the 3-day trip is 5000 EGP, which should be sufficient to cover all expenses."
+    }
+  ];
+  

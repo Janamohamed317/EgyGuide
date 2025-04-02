@@ -11,7 +11,7 @@ const AppContextProvider = (props) => {
   const [userName, setUserName] = useState('');
   const [blogs, setBlogs] = useState([])
   const [userID, setUserID] = useState('');
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -41,7 +41,7 @@ const AppContextProvider = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://travelguide.runasp.net/api/Governorates');
+        const response = await axios.get('https://travelguide.runasp.net/api/Governorates');
         // console.log(response.data);
 
         setCities(response.data['$values']);

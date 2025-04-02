@@ -14,14 +14,14 @@ function Profile() {
     const [profileImage, setProfileImage] = useState(null);
     const [followers, setFollowers] = useState(0);
     const [following, setFollowing] = useState(0);
-    const { setCameraClicked, cameraClicked, userName, isLoggedIn } = useContext(AppContext);
+    const { setCameraClicked, cameraClicked, userName, isLoggedIn, userID } = useContext(AppContext);
     const [userBlogs, setUserBlogs] = useState([])
 
     useEffect(() => {
         const fetchUserBlogs = async () => {
             try {
-                const res = await axios.get('http://travelguide.runasp.net/api/Blogs/user/ee5f7676-03bb-4d60-ac00-f6f9f1595dbb');
-                // console.log('Fetched blogs:', res.data);
+                const res = await axios.get(`https://travelguide.runasp.net/api/Blogs/user/${userID}`);
+                console.log('Fetched blogs:', res.data);
                 setUserBlogs(res.data['$values']);
             } catch (err) {
                 console.error('Error fetching blogs:', err);
@@ -100,7 +100,7 @@ function Profile() {
                             title="OpenStreetMap"
                         ></iframe>
                     </div>
-                    <hr  className='mt-5'/>
+                    <hr className='mt-5' />
                     <h1 className='py-5'>User Blogs</h1>
                     <div className='d-flex justify-content-center align-items-center gap-3 flex-wrap'>
                         {

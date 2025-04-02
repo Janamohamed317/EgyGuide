@@ -25,7 +25,7 @@ function EditCity() {
     const fetchCity = async () => {
         try {
             setLoading(true);
-            const res = await axios.get(`http://travelguide.runasp.net/api/Governorates/${id}`);
+            const res = await axios.get(`https://travelguide.runasp.net/api/Governorates/${id}`);
             setCity(res.data);
         } catch (err) {
             setError("Failed to fetch city details.");

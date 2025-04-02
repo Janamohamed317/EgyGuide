@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { act, useContext, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router";
 import styles3 from "./TripPlan.module.css";
 import { motion } from "motion/react";
@@ -9,26 +9,30 @@ import Footer from "../Footer/Footer";
 import Navbar from "../Navbar/Navbar";
 import { AppContext } from '../Context/AppContext';
 import CameraModal from "../CameraModal/CameraModal";
-// import { citiess } from "../../assets/assets";
+import { Plan } from "../../assets/assets";
 import axios from "axios"
 
 
 function TripPlan() {
-  const { setCameraClicked, cameraClicked, cities } = useContext(AppContext);
+  const { setCameraClicked, cameraClicked } = useContext(AppContext);
   const Location = useLocation();
   const { days, cityID } = Location.state;
   const daysArray = Array.from({ length: days }, (_, index) => index + 1);
   const [loading, setLoading] = useState(true);
   const [selectedCity, setSelectedCity] = useState([])
+  const [prevId, setPrevId] = useState(null)
 
   useEffect(() => {
-    fetchCity();
-  }, []);
+    if (cityID !== prevId) {
+      fetchCity(cityID);
+      setPrevId(cityID)
+    }
+  }, [cityID]);
 
-  const fetchCity = async () => {
+  const fetchCity = async (cityID) => {
     setLoading(true)
     try {
-      const res = await axios.get(`http://travelguide.runasp.net/api/Governorates/${cityID}`)
+      const res = await axios.get(`https://travelguide.runasp.net/api/Governorates/${cityID}`)
       setSelectedCity(res.data)
 
     }
@@ -41,6 +45,9 @@ function TripPlan() {
     }
   };
 
+  const memoizedTopPlaces = useMemo(() => {
+    return selectedCity.topPlaces?.['$values'] || [];
+  }, [selectedCity]);
 
   const FadeInVariant = {
     initial: { opacity: 0 },
@@ -82,11 +89,20 @@ function TripPlan() {
           whileInView='whileInView'>
           <p className={styles3.plan_txt}>Here is Your Generated Plan</p>
           <div className={styles3.trip_details}>
-            {daysArray.map((day) => (
-              <div key={day} className={styles3.day_container}>
+            {Plan.filter(day => day.activities).map((day) => (
+              <div key={day.id} className={styles3.day_container}>
                 <details>
-                  <summary> DAY {day} </summary>
-                  <p>plan plan plan</p>
+                  <summary>{day.day}</summary>
+                  {day.activities.map((activity,index) => (
+                    <div key={activity.id} >
+                      <h1>Activity: {index + 1}</h1>
+                      <p className="fs-2">- Activity: {activity.activity}</p>
+                      <p className="fs-2">- Location: {activity.location}</p>
+                      <p className="fs-2">- Price Range: {activity.price_range}</p>
+                      <p className="fs-2">- Recommended Time to Visit: {activity.time}</p>
+                    </div>
+                  ))}
+                  <p>Approximate Cost for the Day: {day.approximate_cost}</p>
                 </details>
               </div>
             ))}
@@ -95,14 +111,11 @@ function TripPlan() {
 
         <hr className={styles3.line} />
 
-        <motion.div
-          className={styles3.top_picks}
+        <motion.div className={styles3.top_picks}
           variants={FadeInVariant}
           initial='initial'
           whileInView='whileInView'>
-          {selectedCity.topPlaces && selectedCity.topPlaces['$values'] && (
-            <Carousel topPlaces={selectedCity.topPlaces['$values']} />
-          )}
+          {memoizedTopPlaces.length > 0 && <Carousel topPlaces={memoizedTopPlaces} />}
         </motion.div>
 
         <FontAwesomeIcon icon={faCamera} className='camera_icon' onClick={() => setCameraClicked(true)} />

@@ -31,7 +31,12 @@ function Signin() {
       if (!value) {
         setPasswordError("Password is required");
       } else if (!passwordRegex.test(value)) {
-        setPasswordError('Password must contain: 6+ chars, 1 uppercase, 1 lowercase, 1 number, and 1 special character (!@#$%^&*)');
+        setPasswordError(`Password must contain:
+                         - 6+ characters
+                         - 1 uppercase letter
+                         - 1 lowercase letter
+                         - 1 number
+                         - 1 special character (!@#$%^&*)`);
       } else {
         setPasswordError("");
       }
@@ -57,7 +62,7 @@ function Signin() {
 
     try {
       const response = await axios.post(
-        "http://travelguide.runasp.net/api/UsersIdentity/Login",
+        "https://travelguide.runasp.net/api/UsersIdentity/Login",
         { email, password },
       );
 
@@ -66,10 +71,10 @@ function Signin() {
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userName", response.data.dispalyName);
-        localStorage.setItem("userID", response.data.$id);
+        localStorage.setItem("userID", response.data.userId);
 
         setUserName(response.data.dispalyName);
-        setUserID(response.data.id)
+        setUserID(response.data.userId)
         setIsLoggedIn(true)
         await Swal.fire({
           icon: "success",
@@ -81,14 +86,12 @@ function Signin() {
         navigate("/home");
       }
     } catch (error) {
-      console.error("Login error:", error.response?.data || error.message);
-
       let errorMessage = "There was an error signing in. Please try again.";
       if (error.response) {
-        errorMessage = error.response.data?.message ||
-          (error.response.status === 401
-            ? "Invalid email or password"
-            : "Login failed");
+        if (error.response.status === 401) {
+          errorMessage = "Invalid email or password";
+        }
+
       }
 
       Swal.fire({

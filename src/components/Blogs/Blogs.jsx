@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import Navbar from "../Navbar/Navbar";
 import Blog from '../Blog/Blog';
 import Footer from '../Footer/Footer';
@@ -19,7 +19,7 @@ function Blogs() {
     const fetchBlogs = async () => {
         setLoading(true)
         try {
-            const res = await axios.get('http://travelguide.runasp.net/api/Blogs')
+            const res = await axios.get('https://travelguide.runasp.net/api/Blogs')
             setBlogs(res.data['$values'])
 
         }
@@ -32,12 +32,12 @@ function Blogs() {
         }
     };
 
-    const handleBlogSubmit = () => {
+    const handleBlogSubmit = async () => {
         if (blogContent.trim()) {
             try {
-                const res = axios.post('http://travelguide.runasp.net/api/Blogs', {
+                const res = await axios.post(`https://travelguide.runasp.net/api/Blogs`, {
                     blog: blogContent,
-                    userId: "ee5f7676-03bb-4d60-ac00-f6f9f1595dbb"
+                    userId: userID
                 })
                 if (res.status === 200 || res.status === 201) {
                     setBlogContent('')
@@ -51,13 +51,24 @@ function Blogs() {
         };
     }
 
-   
+    const memoizedBlogs = useMemo(() => {
+        return blogs.map((blog) => (
+            <Blog
+                key={blog.id}
+                id={blog.id}
+                blog={blog.blog}
+            />
+        ));
+    }, [blogs]);
 
-    const displayedBlogs = searchedItem
-        ? blogs.filter(blog =>
-            blog.blog.toLowerCase().includes(searchedItem.toLowerCase())
-        )
-        : blogs;
+
+    const displayedBlogs = useMemo(() => {
+        return searchedItem
+            ? blogs.filter((blog) =>
+                blog.blog.toLowerCase().includes(searchedItem.toLowerCase())
+            )
+            : blogs;
+    }, [searchedItem, blogs]);
 
 
 

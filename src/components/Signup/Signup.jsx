@@ -42,7 +42,12 @@ function Signup() {
                 setPasswordError('Password is required');
             }
             else if (!passwordRegex.test(value)) {
-                setPasswordError('Password must contain: 6+ chars, 1 uppercase, 1 lowercase, 1 number, and 1 special character (!@#$%^&*)');
+                setPasswordError(`Password must contain:
+                                 - 6+ characters
+                                 - 1 uppercase letter
+                                 - 1 lowercase letter
+                                 - 1 number
+                                 - 1 special character (!@#$%^&*)`);
             }
             else {
                 setPasswordError('');
@@ -77,7 +82,7 @@ function Signup() {
         }
 
         try {
-            const res = await axios.post('http://travelguide.runasp.net/api/UsersIdentity/Register', {
+            const res = await axios.post('https://travelguide.runasp.net/api/UsersIdentity/Register', {
                 email,
                 dispalyName: userName,
                 password,
@@ -112,7 +117,7 @@ function Signup() {
                 });
             }
         } catch (error) {
-            console.log(error.response?.data)
+            // console.log(error.response?.data)
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
