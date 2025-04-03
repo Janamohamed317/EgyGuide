@@ -22,7 +22,7 @@ function Blogs() {
         try {
             const res = await axios.get('https://travelguide.runasp.net/api/Blogs')
             setBlogs(res.data['$values'])
-
+            // console.log(res.data['$values']);
         }
         catch (err) {
             console.log('error fetching data');
@@ -123,7 +123,9 @@ function Blogs() {
                                 <h3>No blogs found</h3>
                             ) : (
                                 displayedBlogs.map((blog) => (
-                                    <Blog key={blog.id} blog={blog.blog} />
+                                    <Blog key={blog.id} blog={blog.blog}
+                                        BlogUserName={blog.userDisplayName
+                                        } />
                                 ))
                             )}
                 </div>

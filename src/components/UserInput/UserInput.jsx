@@ -25,6 +25,7 @@ function UserInput() {
   const [cityID, setCityID] = useState("");
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false)
+  const [GeneratedPlan, setGeneratedPlan] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,39 +33,39 @@ function UserInput() {
   }, []);
   const generatPlan = async () => {
     setIsLoading(true)
-    navigate("/Trip-plan", {
-      state: {
-        cityID: cityID,
-        days: planDetails.num_days,
-        // plan: res.data,
-      },
-    });
-    // try {
-    //   const res = await axios.post(`${API_URL}/api/travel-plan`, {
-    //     city: planDetails.city,
-    //     favorite_places: planDetails.favorite_places,
-    //     visitor_type: planDetails.visitor_type,
-    //     num_days: planDetails.num_days,
-    //     budget: planDetails.budget
-    //   });
 
-    //   navigate("/Trip-plan", {
-    //     state: {
-    //       cityID: cityID,
-    //       days: planDetails.num_days,
-    //       plan: res.data,
-    //     },
-    //   });
-    // } catch (err) {
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Something went wrong',
-    //     text: 'There was an issue generating the plan. Please try again later.',
-    //   });
-    // }
-    // finally {
-    //   setIsLoading(false)
-    // }
+    // console.log('PlanDetails: ', planDetails);
+    try {
+      const res = await axios.post(`http://161.35.210.244:8000/api/travel-plan`, {
+        city: planDetails.city,
+        favorite_places: planDetails.favorite_places,
+        visitor_type: planDetails.visitor_type,
+        num_days: planDetails.num_days,
+        budget: planDetails.budget
+      });
+      if (res.data) {
+        setIsLoading(false)
+
+        navigate("/Trip-plan", {
+          state: {
+            cityID: cityID,
+            days: planDetails.num_days,
+            plan: res.data
+          },
+        });
+      }
+
+
+    } catch (err) {
+      setIsLoading(false)
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Something went wrong',
+        text: 'There was an issue generating the plan. Please try again later.',
+      });
+    }
+
   };
 
   const handleTripSelection = () => {

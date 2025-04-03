@@ -12,6 +12,8 @@ import Siwa from './Siwa4.jpg'
 import Pyramids from './Pyramids.jpeg'
 import WhiteDesert from './White Desert.jpg'
 import SaintCatherine from './Saint Catherine.jpg'
+import logo from './4.png'
+import Footerlogo from './7.png'
 import PeopleIcon from '@mui/icons-material/People';
 import PublicIcon from '@mui/icons-material/Public';
 import AssignmentIcon from '@mui/icons-material/Assignment';
@@ -34,9 +36,10 @@ export const imgs = {
     WhiteDesert,
     LuxorExp,
     Pyramids,
+    logo,
+    Footerlogo,
 
 };
-
 
 
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import footer from './Footer.module.css'
 import { useNavigate } from 'react-router-dom';
-import { contact_icons, social_icons, Quick_Links } from '../../assets/assets'
+import { contact_icons, social_icons, Quick_Links , imgs } from '../../assets/assets'
 
 function Footer() {
   const navigate = useNavigate();

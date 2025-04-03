@@ -21,6 +21,7 @@ function TripPlan() {
   const location = useLocation();
   const { plan, cityID } = location.state;
   // const {  cityID } = location.state;
+console.log(plan);
 
   const [loading, setLoading] = useState(true);
   const [selectedCity, setSelectedCity] = useState([]);
@@ -94,7 +95,7 @@ function TripPlan() {
           whileInView="whileInView">
           <p className={styles3.plan_txt}>Here is Your Generated Plan</p>
 
-          {/* <h2>Notes:</h2>
+          <h2>Notes:</h2>
           <p className="fs-4">{plan.notes}</p>
           <h2>Total Approximate Cost: {plan.total_approximate_cost}</h2>
           <p className={styles3.plan_txt}>Here is Your Generated Plan</p>
@@ -116,7 +117,7 @@ function TripPlan() {
                 </details>
               </motion.div>
             ))}
-          </div> */}
+          </div>
         </motion.div>
 
         <hr className={styles3.line} />
